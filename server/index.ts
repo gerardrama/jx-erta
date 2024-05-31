@@ -4,7 +4,7 @@ import cors from "cors";
 import { testDbConnection } from "./configs/daatabase";
 
 const app: Express = express();
-const port = 4000;
+const port = process.env.PORT;
 
 app.use(cors());
 
