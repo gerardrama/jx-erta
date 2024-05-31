@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
-import { Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize-typescript';
+import { User } from '../models/User';
 
 dotenv.config();
 
@@ -8,7 +9,8 @@ export const sequelize = new Sequelize({
   dialect: 'postgres',
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST
+  host: process.env.DB_HOST,
+  models: [User]
 });
 
 export const testDbConnection = async () => {

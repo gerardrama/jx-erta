@@ -1,7 +1,7 @@
 import express, { Express } from "express";
 import listEndpoints from "express-list-endpoints";
 import cors from "cors";
-import { testDbConnection } from "./configs/daatabase";
+import { testDbConnection } from "./configs/database";
 
 const app: Express = express();
 const port = process.env.PORT;
