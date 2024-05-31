@@ -1,6 +1,11 @@
 import dotenv from 'dotenv';
 import { Sequelize } from 'sequelize-typescript';
 import { User } from '../models/User';
+import { Status } from '../models/Status';
+import { Department } from '../models/Department';
+import { Priority } from '../models/Priority';
+import { Task } from '../models/Task';
+import { Project } from '../models/Project';
 
 dotenv.config();
 
@@ -10,7 +15,7 @@ export const sequelize = new Sequelize({
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   host: process.env.DB_HOST,
-  models: [User]
+  models: [User, Task, Priority, Status, Department, Project]
 });
 
 export const testDbConnection = async () => {
