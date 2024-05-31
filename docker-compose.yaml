@@ -1,0 +1,49 @@
+version: '3'
+name: jx-erta-prod
+
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: ./Dockerfile
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.jx_erta_fe.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.jx_erta_fe.entrypoints=websecure
+      - traefik.http.routers.jx_erta_fe.tls=true
+      - traefik.http.routers.jx_erta_fe.tls.certresolver=letsencrypt
+    env_file:
+      - "client/.env"
+    network_mode: bridge
+    restart: always
+
+  server:
+    build:
+      context: ./server
+      dockerfile: ./Dockerfile
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.jx_erta_be.rule=Host(`api.${DOMAIN}`)
+      - traefik.http.routers.jx_erta_be.entrypoints=websecure
+      - traefik.http.services.jx_erta_be.loadbalancer.server.port=4000
+      - traefik.http.routers.jx_erta_be.tls=true
+      - traefik.http.routers.jx_erta_be.tls.certresolver=letsencrypt
+    env_file:
+      - "server/.env"
+    links:
+      - database:database
+    network_mode: bridge
+    restart: always
+
+  database:
+    image: postgres:15.2
+    volumes:
+    - "./database/data:/var/lib/postgresql/data"
+    env_file:
+      - "database/.env"
+    ports:
+      - "5432:5432"
+    network_mode: bridge
+    restart: always
+
+# docker compose up -d
