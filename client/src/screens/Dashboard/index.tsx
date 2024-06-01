@@ -35,11 +35,11 @@ function getItem(
 
 const items: MenuItem[] = [
   getItem('Task Board', '1', <TeamOutlined />),
-  getItem('Store Info Table', '2', <InboxOutlined />),
-  getItem('Products Table', '3', <InboxOutlined />),
-  getItem('News Table', '4', <FileTextOutlined />),
-  getItem('Testimonials Table', '5', <CommentOutlined />),
-  getItem('FAQ Table', '6', <CommentOutlined />)
+  getItem('Projects', '2', <InboxOutlined />),
+  getItem('Departments', '3', <InboxOutlined />),
+  // getItem('News Table', '4', <FileTextOutlined />),
+  // getItem('Testimonials Table', '5', <CommentOutlined />),
+  // getItem('FAQ Table', '6', <CommentOutlined />)
 ];
 
 const Dashboard: React.FC = () => {
@@ -75,7 +75,10 @@ const Dashboard: React.FC = () => {
             <Notifications />
           </div>
         </Header>
-        <Content style={{ margin: '0 16px', display: 'flex', justifyContent: 'center', alignItems:'center', width:'100%'}}>
+        <Content style={{ 
+          margin: '0 16px'
+        // , display: 'flex', justifyContent: 'center', alignItems:'center', width:'100%'
+        }}>
           {/* <Breadcrumb style={{ margin: '16px 0' }}>
             <Breadcrumb.Item>User</Breadcrumb.Item>
             <Breadcrumb.Item>Bill</Breadcrumb.Item>
