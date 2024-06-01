@@ -20,5 +20,5 @@
 
 .innerLayout{
     flex: 1;
-    overflow: scroll;
+    overflow-x: scroll;
 }
