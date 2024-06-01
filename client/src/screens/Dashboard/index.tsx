@@ -12,6 +12,8 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { changeRouteFromMenu } from '../../shared/changeRouteFromMenu';
 import styles from './Dashboard.module.css'
 import useLogout from '../../shared/useLogout';
+import { Header } from 'antd/es/layout/layout';
+import Notifications from '../../components/Notifications';
 
 const { Content, Footer, Sider } = Layout;
 
@@ -67,7 +69,12 @@ const Dashboard: React.FC = () => {
         </div>
       </Sider>
       <Layout className={styles.innerLayout}>
-        {/* <Header style={{ padding: 0, background: colorBgContainer }} /> */}
+        <Header className={styles.header} style={{ background: colorBgContainer }}>
+          <h1 className={styles.title}>Admin Dashboard</h1>
+          <div>
+            <Notifications />
+          </div>
+        </Header>
         <Content style={{ margin: '0 16px', display: 'flex', justifyContent: 'center', alignItems:'center', width:'100%'}}>
           {/* <Breadcrumb style={{ margin: '16px 0' }}>
             <Breadcrumb.Item>User</Breadcrumb.Item>

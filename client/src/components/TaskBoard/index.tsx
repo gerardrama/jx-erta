@@ -127,11 +127,6 @@ function TaskBoard() {
                                                     <TaskCard
                                                         provided={provided}
                                                         snapshot={snapshot}
-                                                        item={item}
-                                                        ind={ind}
-                                                        index={index}
-                                                        state={state}
-                                                        setState={setState}
                                                         getItemStyle={getItemStyle}
                                                     />
                                                 )}
