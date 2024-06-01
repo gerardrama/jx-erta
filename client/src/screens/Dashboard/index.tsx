@@ -54,16 +54,21 @@ const Dashboard: React.FC = () => {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider style={{overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0}} collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+      <Sider 
+        className={styles.sider} 
+        collapsible 
+        collapsed={collapsed} 
+        onCollapse={(value) => setCollapsed(value)}
+      >
         {/* <div className="demo-logo-vertical" /> */}
         <div className={styles.siderMenu}>
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} onClick={changeMenu} />
           <Button ghost type="primary" icon={<LogoutOutlined rotate={180}/>} size={'large'} onClick={logout} style={{margin: '4px', width: 'auto'}}></Button>
         </div>
       </Sider>
-      <Layout>
+      <Layout className={styles.innerLayout}>
         {/* <Header style={{ padding: 0, background: colorBgContainer }} /> */}
-        <Content style={{ margin: '0 16px', display: 'flex', justifyContent: 'center', alignItems:'center'}}>
+        <Content style={{ margin: '0 16px', display: 'flex', justifyContent: 'center', alignItems:'center', width:'100%'}}>
           {/* <Breadcrumb style={{ margin: '16px 0' }}>
             <Breadcrumb.Item>User</Breadcrumb.Item>
             <Breadcrumb.Item>Bill</Breadcrumb.Item>

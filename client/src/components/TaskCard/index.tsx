@@ -1,39 +1,53 @@
 import React from 'react';
 import styles from './TaskCard.module.css';
+import { Avatar, Card, Modal, Tooltip } from 'antd';
+import {UserOutlined, AntDesignOutlined} from '@ant-design/icons';
 
-const TaskCard = ({provided, snapshot, item, ind, index, state, setState, getItemStyle}) => {
+const TaskCard = ({provided, snapshot, getItemStyle}) => {
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
     return (
-        <div
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            style={getItemStyle(
-                snapshot.isDragging,
-                provided.draggableProps.style
-            )}
-            className={styles.card}
-        >
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-around"
-                }}
+        <>
+            <Modal title="Basic Modal" open={isModalOpen} onCancel={handleCancel} footer=''>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+            </Modal>
+            <Card 
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+                style={getItemStyle(
+                    snapshot.isDragging,
+                    provided.draggableProps.style
+                )}
+                className={styles.card}
+                title="Card title"
+                onClick={showModal}
             >
-                {item.content}
-                <button
-                    type="button"
-                    onClick={() => {
-                        const newState = [...state];
-                        newState[ind].splice(index, 1);
-                        setState(
-                            newState.filter(group => group.length)
-                        );
-                    }}
-                >
-                    delete
-                </button>
-            </div>
-        </div>
+                <p>Card content</p>
+                <p>Card content</p>
+                <p>Card content</p>
+                <div className={styles.avatars}>
+                    <Avatar.Group maxCount={2} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
+                        <Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />
+                        <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                        <Tooltip title="Ant User" placement="top">
+                            <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+                        </Tooltip>
+                        <Avatar style={{ backgroundColor: '#1677ff' }} icon={<AntDesignOutlined />} />
+                    </Avatar.Group>
+                </div>
+            </Card>
+        </>
     );
 };
 

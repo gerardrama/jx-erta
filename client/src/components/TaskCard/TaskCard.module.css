@@ -1,3 +1,9 @@
 .card{
     border-radius: 6px;
+    padding: 0 !important;
+    /* width: 300px; */
+}
+.avatars{
+    display: flex;
+    justify-content: flex-end;
 }

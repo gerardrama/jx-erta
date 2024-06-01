@@ -1,6 +1,24 @@
+.sider{
+    overflow: 'auto';
+    height: '100vh'; position: 'fixed';
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+.sider > div:first-child{
+    position: fixed;
+    width: inherit;
+}
 .siderMenu{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: calc(100vh - 48px);
+    /* position: fixed;
+    width: inherit; */
+}
+
+.innerLayout{
+    flex: 1;
+    overflow-x: scroll;
 }

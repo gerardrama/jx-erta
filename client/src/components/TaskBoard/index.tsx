@@ -34,7 +34,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 
     return result;
 };
-const grid = 8;
+const grid = 10;
 
 const getItemStyle = (isDragging, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
@@ -43,15 +43,17 @@ const getItemStyle = (isDragging, draggableStyle) => ({
     margin: `0 0 ${grid}px 0`,
 
     // change background colour if dragging
-    background: isDragging ? "lightgreen" : "grey",
+    // background: isDragging ? "lightgreen" : "white",
+    background: "white",
 
     // styles we need to apply on draggables
     ...draggableStyle
 });
 const getListStyle = isDraggingOver => ({
-    background: isDraggingOver ? "lightblue" : "lightgrey",
+    // background: isDraggingOver ? "lightblue" : "#F0F2F5",
+    background: "#F0F2F5",
     padding: grid,
-    width: 250
+    width: 350
 });
 
 function TaskBoard() {
@@ -83,7 +85,7 @@ function TaskBoard() {
     }
 
     return (
-        <div>
+        <div style={{width:'100%'}}>
             <button
                 type="button"
                 onClick={() => {
@@ -112,28 +114,30 @@ function TaskBoard() {
                                     className={styles.column}
                                 >
                                     <div>
-                                        <h3 style={{marginTop: 0}}>Group {ind}</h3>
+                                        <h3 style={{marginTop: 0, marginLeft: '15px'}}>Group {ind}</h3>
                                     </div>
-                                    {el.map((item, index) => (
-                                        <Draggable
-                                            key={item.id}
-                                            draggableId={item.id}
-                                            index={index}
-                                        >
-                                            {(provided, snapshot) => (
-                                                <TaskCard
-                                                    provided={provided}
-                                                    snapshot={snapshot}
-                                                    item={item}
-                                                    ind={ind}
-                                                    index={index}
-                                                    state={state}
-                                                    setState={setState}
-                                                    getItemStyle={getItemStyle}
-                                                />
-                                            )}
-                                        </Draggable>
-                                    ))}
+                                    <div className={styles.cardContainer}>
+                                        {el.map((item, index) => (
+                                            <Draggable
+                                                key={item.id}
+                                                draggableId={item.id}
+                                                index={index}
+                                            >
+                                                {(provided, snapshot) => (
+                                                    <TaskCard
+                                                        provided={provided}
+                                                        snapshot={snapshot}
+                                                        item={item}
+                                                        ind={ind}
+                                                        index={index}
+                                                        state={state}
+                                                        setState={setState}
+                                                        getItemStyle={getItemStyle}
+                                                    />
+                                                )}
+                                            </Draggable>
+                                        ))}
+                                    </div>
                                     {provided.placeholder}
                                 </div>
                             )}
