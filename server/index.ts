@@ -10,7 +10,9 @@ import { statusRoute } from "./routes/statusRoutes";
 import { departmentRoutes } from "./routes/departmentRoutes";
 import {userRoutes} from "./routes/userRoutes";
 import { priorityRoute } from "./routes/priorityRoutes";
-import { messageRoutes } from "./routes/messageRoutes";
+import {commentRoutes} from "./routes/commentRoutes";
+import http from 'http';
+import {socketServer} from './configs/socketServer';
 
 const app: Express = express();
 const port = process.env.PORT;
@@ -31,7 +33,7 @@ app.use(statusRoute);
 app.use(departmentRoutes);
 app.use(priorityRoute);
 app.use(userRoutes);
-app.use(messageRoutes);
+app.use(commentRoutes);
 
 app.get('/', function(req, res){
     res.send("We are online!");
@@ -41,7 +43,11 @@ app.use('/auth', authRoute);
 
 console.table(listEndpoints(app));
 
-app.listen(port, () => {
+const httpServer = http.createServer(app);
+
+socketServer(httpServer);
+
+httpServer.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
     testDbConnection();
 });

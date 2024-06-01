@@ -1,6 +1,6 @@
 import { Comment } from "../models/Comment";
 
-export const addMessage = async (req, res) => {
+export const addComment = async (req, res) => {
     const message: {ticketId, userId, message} = req.body;
 
     try {
@@ -18,7 +18,7 @@ export const addMessage = async (req, res) => {
     }
 };
 
-export const updateMessage = async (req, res) => {
+export const updateComment = async (req, res) => {
     const message: {commentId, message} = req.body;
 
     try {
@@ -37,7 +37,7 @@ export const updateMessage = async (req, res) => {
     }
 }
 
-export const showTicketMessage = async (req, res) => {
+export const showTicketComments = async (req, res) => {
     const taskId = req.param.id;
 
     try {
