@@ -10,6 +10,7 @@ import { statusRoute } from "./routes/statusRoutes";
 import { departmentRoutes } from "./routes/departmentRoutes";
 import {userRoutes} from "./routes/userRoutes";
 import { priorityRoute } from "./routes/priorityRoutes";
+import { messageRoutes } from "./routes/messageRoutes";
 
 const app: Express = express();
 const port = process.env.PORT;
@@ -30,6 +31,7 @@ app.use(statusRoute);
 app.use(departmentRoutes);
 app.use(priorityRoute);
 app.use(userRoutes);
+app.use(messageRoutes);
 
 app.get('/', function(req, res){
     res.send("We are online!");
