@@ -9,6 +9,7 @@ import { taskRoute } from "./routes/taskRoutes";
 import { statusRoute } from "./routes/statusRoutes";
 import { departmentRoutes } from "./routes/departmentRoutes";
 import {userRoutes} from "./routes/userRoutes";
+import { priorityRoute } from "./routes/priorityRoutes";
 
 const app: Express = express();
 const port = process.env.PORT;
@@ -27,6 +28,7 @@ app.use(projectRoute);
 app.use(taskRoute);
 app.use(statusRoute);
 app.use(departmentRoutes);
+app.use(priorityRoute);
 app.use(userRoutes);
 
 app.get('/', function(req, res){
