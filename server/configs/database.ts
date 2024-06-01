@@ -8,6 +8,7 @@ import { Task } from '../models/Task';
 import { Project } from '../models/Project';
 import {UserTasks} from "../models/UserTasks";
 import {Role} from "../models/Role";
+import { Comment } from '../models/Comment';
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ export const sequelize = new Sequelize({
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   host: process.env.DB_HOST,
-  models: [Role, User, Task, Priority, Status, Department, Project, UserTasks]
+  models: [Role, User, Task, Priority, Status, Department, Project, UserTasks, Comment]
 });
 
 export const testDbConnection = async () => {
