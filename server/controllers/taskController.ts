@@ -8,7 +8,25 @@ import { UserTasks } from "../models/UserTasks";
 
 export const getAllTasks = async (req, res) => {
     try {
+        const { projectId, statusId, priorityId, departmentId } = req.query;
+
+        let where: any = {};
+
+        if (projectId) {
+            where.projectId = projectId;
+        }
+        if (statusId) {
+            where.statusId = statusId;
+        }
+        if (priorityId) {
+            where.priorityId = priorityId;
+        }
+        if (departmentId) {
+            where.departmentId = departmentId;
+        }
+
         const tasks = await Task.findAll({
+            where,
             include: [Project, Status, Priority, Department, {
                 model: User,
                 through: { attributes: [] } 
@@ -43,14 +61,14 @@ export const getTask = async (req, res) => {
 
 export const createTask = async (req, res) => {
     try {
-        const task: { projectId, title, description, statusId, priorityId, departmentId, parentId, deadline, userIds: number[] } = req.body;
+        const task: { projectId, title, description, statusId, priorityId, departmentId, parentId, deadline, userIds } = req.body;
     
         if (!req.body) {
             return res.status(400).json({ message: 'Request body is empty' });
         }
         
         const newTask = await Task.create({
-            task
+           ...task
         });
 
         if (task.userIds.length !== 0) {
@@ -64,7 +82,7 @@ export const createTask = async (req, res) => {
 
         return res.status(201).json(newTask);
     } catch (error) {
-        return res.status(500).json({ error: 'An error occurred while creating the task' });
+        return res.status(500).json({ error: 'An error occurred while creating the task' + error });
     }
 };
 
