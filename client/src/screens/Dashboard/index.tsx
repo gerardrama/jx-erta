@@ -68,7 +68,7 @@ const Dashboard: React.FC = () => {
       </Sider>
       <Layout className={styles.innerLayout}>
         {/* <Header style={{ padding: 0, background: colorBgContainer }} /> */}
-        <Content style={{ margin: '0 16px', display: 'flex', justifyContent: 'center', alignItems:'center'}}>
+        <Content style={{ margin: '0 16px', display: 'flex', justifyContent: 'center', alignItems:'center', width:'100%'}}>
           {/* <Breadcrumb style={{ margin: '16px 0' }}>
             <Breadcrumb.Item>User</Breadcrumb.Item>
             <Breadcrumb.Item>Bill</Breadcrumb.Item>

@@ -83,7 +83,7 @@ function TaskBoard() {
     }
 
     return (
-        <div>
+        <div style={{width:'100%'}}>
             <button
                 type="button"
                 onClick={() => {
@@ -114,26 +114,28 @@ function TaskBoard() {
                                     <div>
                                         <h3 style={{marginTop: 0}}>Group {ind}</h3>
                                     </div>
-                                    {el.map((item, index) => (
-                                        <Draggable
-                                            key={item.id}
-                                            draggableId={item.id}
-                                            index={index}
-                                        >
-                                            {(provided, snapshot) => (
-                                                <TaskCard
-                                                    provided={provided}
-                                                    snapshot={snapshot}
-                                                    item={item}
-                                                    ind={ind}
-                                                    index={index}
-                                                    state={state}
-                                                    setState={setState}
-                                                    getItemStyle={getItemStyle}
-                                                />
-                                            )}
-                                        </Draggable>
-                                    ))}
+                                    <div className={styles.cardContainer}>
+                                        {el.map((item, index) => (
+                                            <Draggable
+                                                key={item.id}
+                                                draggableId={item.id}
+                                                index={index}
+                                            >
+                                                {(provided, snapshot) => (
+                                                    <TaskCard
+                                                        provided={provided}
+                                                        snapshot={snapshot}
+                                                        item={item}
+                                                        ind={ind}
+                                                        index={index}
+                                                        state={state}
+                                                        setState={setState}
+                                                        getItemStyle={getItemStyle}
+                                                    />
+                                                )}
+                                            </Draggable>
+                                        ))}
+                                    </div>
                                     {provided.placeholder}
                                 </div>
                             )}

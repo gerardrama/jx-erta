@@ -1,4 +1,9 @@
 .column{
     margin: 0 20px;
     border-radius: 6px;
+    min-width: 350px;
+}
+
+.cardContainer{
+
 }
