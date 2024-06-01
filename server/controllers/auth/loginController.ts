@@ -1,7 +1,7 @@
-import {User} from "../models/User";
+import {User} from "../../models/User";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import {Role} from "../models/Role";
+import {Role} from "../../models/Role";
 
 export const handleLogin = async (req, res) => {
     const { email, password } = req.body;

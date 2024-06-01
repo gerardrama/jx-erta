@@ -1,6 +1,6 @@
-import {User} from "../models/User";
+import {User} from "../../models/User";
 import jwt from 'jsonwebtoken';
-import {Role} from "../models/Role";
+import {Role} from "../../models/Role";
 export const handleRefreshToken = async (req, res) => {
     const cookies = req.cookies;
 
