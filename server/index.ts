@@ -7,6 +7,7 @@ import { projectRoute } from "./routes/projectRoutes";
 import { authRoute } from "./routes/authRoutes";
 import { taskRoute } from "./routes/taskRoutes";
 import { statusRoute } from "./routes/statusRoutes";
+import { departmentRoutes } from "./routes/departmentRoutes";
 
 const app: Express = express();
 const port = process.env.PORT;
@@ -23,6 +24,7 @@ app.use(cookieParser());
 app.use(projectRoute);
 app.use(taskRoute);
 app.use(statusRoute);
+app.use(departmentRoutes);
 
 app.get('/', function(req, res){
     res.send("We are online!");
