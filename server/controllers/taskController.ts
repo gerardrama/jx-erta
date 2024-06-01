@@ -4,6 +4,7 @@ import { Project } from "../models/Project";
 import { Status } from "../models/Status";
 import { Task } from "../models/Task";
 import { User } from "../models/User";
+import { UserTasks } from "../models/UserTasks";
 
 export const getAllTasks = async (req, res) => {
     try {
@@ -42,7 +43,7 @@ export const getTask = async (req, res) => {
 
 export const createTask = async (req, res) => {
     try {
-        const task: { projectId, title, description, statusId, priorityId, departmentId, parentId, deadline } = req.body;
+        const task: { projectId, title, description, statusId, priorityId, departmentId, parentId, deadline, userIds: number[] } = req.body;
     
         if (!req.body) {
             return res.status(400).json({ message: 'Request body is empty' });
@@ -52,6 +53,15 @@ export const createTask = async (req, res) => {
             task
         });
 
+        if (task.userIds.length !== 0) {
+            task.userIds.forEach(async userId => {
+                await UserTasks.create({
+                    userId: userId,
+                    taskId: newTask.id
+                });
+            });
+        }
+
         return res.status(201).json(newTask);
     } catch (error) {
         return res.status(500).json({ error: 'An error occurred while creating the task' });
@@ -60,7 +70,7 @@ export const createTask = async (req, res) => {
 
 export const updateTask = async (req, res) => {
     const id = req.params.id;
-    const updatedTask: { projectId, title, description, statusId, priorityId, departmentId, parentId, deadline } = req.body;
+    const updatedTask: { projectId, title, description, statusId, priorityId, departmentId, parentId, deadline, userIds: number[] } = req.body;
     
     try {
         const task = await Task.findByPk(id);
@@ -71,8 +81,27 @@ export const updateTask = async (req, res) => {
         await task.update({
             ...updatedTask
         });
+
+        if (updatedTask.userIds.length !== 0) {
+            const currentUserIds = (await UserTasks.findAll({ where: { taskId: id } })).map(userTask => userTask.id);
+
+            const usersToAdd = currentUserIds.filter(userId => !currentUserIds.includes(userId));
+            const usersToRemove = currentUserIds.filter(userId => !currentUserIds.includes(userId));
+
+            await Promise.all(usersToAdd.map(async userId => {
+                await UserTasks.create({ userId, taskId: id });
+            }));
+
+            await Promise.all(usersToRemove.map(async userId => {
+                await UserTasks.destroy({ where: { userId, taskId: id } });
+            }));
+
+            const updatedTask = await Task.findByPk(id, {
+                include: [User]
+            });
+        }
         
-        return res.status(200).json(task);
+        return res.status(200).json(updatedTask);
     } catch (error) {
         return res.status(500).json({ error: 'An error occurred while updating the task' });
     }
