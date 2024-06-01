@@ -7,3 +7,7 @@
     display: flex;
     justify-content: flex-end;
 }
+.ribbon{
+    left: 24px;
+    top: -25px;
+}
