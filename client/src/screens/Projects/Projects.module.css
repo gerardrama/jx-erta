@@ -53,8 +53,8 @@
     transition: .3s;
 }
 .addCardButton:hover{
-    background: #ddd;
-    border-color: #888;
+    background: #ddd !important;
+    border-color: #888 !important;
 }
 .addCardButton svg{
     font-size: 50px;

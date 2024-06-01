@@ -1,3 +1,17 @@
+export interface ProjectType{
+    title: string;
+    description: string;
+    client: string;
+    status: StatusType;
+    deadline: Date;
+}
+
+export interface StatusType {
+    id: number;
+    name: string;
+    color: string;
+}
+
 export interface User{
     invoices?: any[];
     id: number;

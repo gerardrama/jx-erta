@@ -2,53 +2,29 @@ import React from 'react'
 import styles from './Projects.module.css'
 import { Badge, Button, Card } from 'antd'
 import { EditOutlined, ProjectOutlined, PlusOutlined, UserOutlined, CalendarOutlined } from '@ant-design/icons';
+import ProjectModal from '../../components/ProjectModal';
+import { projectCards } from '../../shared/data';
+import { ProjectType } from '../../shared/models';
 
 const Projects = () => {
-    const cards = [
-        {
-            title: 'Card title 1',
-            description: 'Card description 1',
-            status: {
-                text: 'In Progress',
-                color: 'blue'
-            },
-            client: 'John Doe',
-            deadline: '2021-10-10'
-        },
-        {
-            title: 'Card title 2 asdsadas dsad sa dsad sadsad',
-            description: 'Card description 2',
-            status: {
-                text: 'Finished',
-                color: 'green'
-            },
-            client: 'John Doe',
-            deadline: '2021-10-10'
-        },
-        {
-            title: 'Card title 3',
-            description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-            status: {
-                text: 'Paused',
-                color: 'grey'
-            },
-            client: 'John Doe',
-            deadline: '2021-10-10'
-        }
-    ]
+    const [openProjectModal, setOpenProjectModal] = React.useState(false);
+    const [updateRecord, setUpdateRecord] = React.useState<ProjectType | null>(null);
 
   return (
     <div>
+        <ProjectModal open={openProjectModal} setOpen={setOpenProjectModal} updateRecord={updateRecord} 
+            // tableRefetch={faq.refetch}
+        />
         <h1>Projects</h1>
 
         <div className={styles.cardsContainer}>
-            {cards.map((card, index) => (
+            {projectCards.map((card, index) => (
                 <Badge.Ribbon 
-                    text={card.status.text}
+                    key={index}
+                    text={card.status.name}
                     color={card.status.color}
                 >
                     <Card 
-                        key={index}
                         className={styles.card}
                         classNames={{
                             body: styles.cardBody,
@@ -57,7 +33,10 @@ const Projects = () => {
                         title={card.title} 
                         bordered={false}
                         actions={[
-                            <EditOutlined key="edit" />,
+                            <EditOutlined key="edit" onClick={() => {
+                                setUpdateRecord(projectCards[index]);
+                                setOpenProjectModal(true);
+                            }} />,
                             <ProjectOutlined key="board" />,
                         ]}
                     >   
@@ -72,7 +51,7 @@ const Projects = () => {
                             </div>
                             <div>
                                 <CalendarOutlined />
-                                {card.deadline}
+                                {new Date(card.deadline).toLocaleDateString()}
                             </div>
                         </div>
                     </Card>
@@ -84,6 +63,10 @@ const Projects = () => {
                 icon={<PlusOutlined />} 
                 size="large"
                 className={styles.addCardButton}
+                onClick={() => {
+                    setUpdateRecord(null);
+                    setOpenProjectModal(true);
+                }}
             ></Button>
         </div>    
     </div>
