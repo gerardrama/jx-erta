@@ -94,3 +94,23 @@ export const deleteTask = async (req, res) => {
         return res.status(500).json({ error: 'An error occurred while deleting the task' });
     }
 };
+
+export const getUserTasks = async(req, res) => {
+    const userId = req.param.id;
+
+    try {
+        const tasks = await Task.findAll({
+            where: {
+                userId: userId
+            }
+        });
+
+        if (!tasks) {
+            return res.status(204).json({ message: 'Tasks not found'});
+        }
+
+        return res.status(200).json(tasks);
+    } catch (error) {
+        return res.status(500).json({ error: 'An error occurred while fetching tasks' });
+    }
+}

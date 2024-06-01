@@ -1,5 +1,5 @@
 import express from "express";
-import { createTask, deleteTask, getAllTasks, getTask, updateTask } from "../controllers/taskController";
+import { createTask, deleteTask, getAllTasks, getTask, getUserTasks, updateTask } from "../controllers/taskController";
 
 export const taskRoute = express.Router();
 
@@ -17,3 +17,6 @@ taskRoute.route('/tasks/:id')
 
 taskRoute.route('/tasks/:id')
     .delete(deleteTask);
+
+taskRoute.route('/task/:userId')
+    .get(getUserTasks);
