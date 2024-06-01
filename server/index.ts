@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import { testDbConnection } from "./configs/database";
 import { projectRoute } from "./routes/projectRoutes";
 import { authRoute } from "./routes/authRoutes";
+import { taskRoute } from "./routes/taskRoutes";
 
 const app: Express = express();
 const port = process.env.PORT;
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(projectRoute);
+app.use(taskRoute);
 
 app.get('/', function(req, res){
     res.send("We are online!");

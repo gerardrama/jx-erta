@@ -1,4 +1,4 @@
-import { AllowNull, Column, DataType, ForeignKey, Table } from "sequelize-typescript";
+import { AllowNull, BelongsTo, Column, DataType, ForeignKey, Table } from "sequelize-typescript";
 import { BaseModel } from "./BaseModel";
 import { User } from "./User";
 import { Status } from "./Status";
@@ -35,4 +35,9 @@ export class Project extends BaseModel {
     })
     deadline!: Date;
 
+    @BelongsTo(() => User)
+    client: User;
+
+    @BelongsTo(() => Status)
+    status: Status;
 }

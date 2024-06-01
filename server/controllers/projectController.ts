@@ -1,8 +1,13 @@
 import { Project } from "../models/Project"
+import { Status } from "../models/Status";
+import { User } from "../models/User";
 
 export const getAllProjects = async (req, res) => {
     try {
-        const projects = await Project.findAll();
+        const projects = await Project.findAll({
+            
+        });
+        console.log(projects);
         if (!projects || projects.length === 0) {
             return res.status(204).send();
         }
@@ -30,18 +35,14 @@ export const getProject = async (req, res) => {
 
 export const createProject = async (req, res) => {
     try {
-        const { title, description, clientId, statusId, deadline } = req.body;
+        const project: { title, description, clientId, statusId, deadline } = req.body;
 
         if (!req) {
             return res.status(400).json({ message: 'Request is empty' });
         }
 
         const newProject = await Project.create({
-            title,
-            description,
-            clientId,
-            statusId,
-            deadline
+            project
         });
 
         return res.status(201).json(newProject);
@@ -52,7 +53,7 @@ export const createProject = async (req, res) => {
 
 export const updateProject = async (req, res) => {
     const  id  = req.params.id;
-    const { title, description, clientId, statusId, deadline } = req.body;
+    const updatedProject: { title, description, clientId, statusId, deadline } = req.body;
 
     try {
         const project = await Project.findByPk(id);
@@ -60,13 +61,9 @@ export const updateProject = async (req, res) => {
             return res.status(204).json({ message: 'Project not found' });
         }
 
-        project.title = title !== undefined ? title : project.title;
-        project.description = description !== undefined ? description : project.description;
-        project.clientId = clientId !== undefined ? clientId : project.clientId;
-        project.statusId = statusId !== undefined ? statusId : project.statusId;
-        project.deadline = deadline !== undefined ? deadline : project.deadline;
-
-        await project.save();
+        await project.update({
+            ...updatedProject
+        });
 
         return res.status(200).json(project);
     } catch (error) {

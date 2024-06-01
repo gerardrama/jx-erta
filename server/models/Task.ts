@@ -54,7 +54,7 @@ export class Task extends BaseModel {
     @Column({
         type: DataType.INTEGER
     })
-    parentId!: number;
+    parentId!: number | null;
 
     @Column({
         type: DataType.DATE,
