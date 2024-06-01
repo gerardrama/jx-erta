@@ -25,7 +25,7 @@ export const handleLogin = async (req, res) => {
     if(!foundUser)
         return res.sendStatus(401);
 
-    const match = bcrypt.compare(password, foundUser.passHash);
+    const match = await bcrypt.compare(password, foundUser.passHash);
 
     if(match) {
         const accessToken = jwt.sign(

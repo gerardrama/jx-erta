@@ -8,6 +8,7 @@ import { authRoute } from "./routes/authRoutes";
 import { taskRoute } from "./routes/taskRoutes";
 import { statusRoute } from "./routes/statusRoutes";
 import { departmentRoutes } from "./routes/departmentRoutes";
+import {userRoutes} from "./routes/userRoutes";
 
 const app: Express = express();
 const port = process.env.PORT;
@@ -21,10 +22,12 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
+
 app.use(projectRoute);
 app.use(taskRoute);
 app.use(statusRoute);
 app.use(departmentRoutes);
+app.use(userRoutes);
 
 app.get('/', function(req, res){
     res.send("We are online!");

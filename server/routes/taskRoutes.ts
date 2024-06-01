@@ -6,14 +6,14 @@ export const taskRoute = express.Router();
 taskRoute.route('/tasks')
     .get(getAllTasks);
 
-taskRoute.route('/task/:id')
+taskRoute.route('/tasks/:id')
     .get(getTask);
 
-taskRoute.route('/task')
+taskRoute.route('/tasks')
     .post(createTask);
 
-taskRoute.route('/task/:id')
+taskRoute.route('/tasks/:id')
     .put(updateTask);
 
-taskRoute.route('/task/:id')
+taskRoute.route('/tasks/:id')
     .delete(deleteTask);

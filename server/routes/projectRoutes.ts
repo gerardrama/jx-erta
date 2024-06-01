@@ -6,14 +6,14 @@ export const projectRoute = express.Router();
 projectRoute.route('/projects')
     .get(getAllProjects);
 
-projectRoute.route('/project/:id')
+projectRoute.route('/projects/:id')
     .get(getProject);
 
-projectRoute.route('/project')
+projectRoute.route('/projects')
     .post(createProject);
 
-projectRoute.route('/project/:id')
+projectRoute.route('/projects/:id')
     .put(updateProject);
 
-projectRoute.route('/project/:id')
+projectRoute.route('/projects/:id')
     .delete(deleteProject);
