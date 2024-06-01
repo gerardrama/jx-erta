@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import TaskCard from "../TaskCard";
 import styles from "./TaskBoard.module.css"
+import {emitTaskDrag} from "../../socketConnection.ts";
 
 // fake data generator
 const getItems = (count, offset = 0) =>
@@ -32,6 +33,8 @@ const move = (source, destination, droppableSource, droppableDestination) => {
     result[droppableSource.droppableId] = sourceClone;
     result[droppableDestination.droppableId] = destClone;
 
+    // TODO: BASIC WEB SOCKET IMPLEMENTATION, CHANGE/REMOVE LATER
+    emitTaskDrag(droppableSource);
     return result;
 };
 const grid = 10;

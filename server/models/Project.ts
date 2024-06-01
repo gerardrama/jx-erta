@@ -17,11 +17,10 @@ export class Project extends BaseModel {
     })
     description!: string;
 
-    @ForeignKey(() => User)
     @Column({
-        type: DataType.INTEGER,
+        type: DataType.STRING,
     })
-    clientId!: number;
+    client!: string;
 
     @ForeignKey(() => Status)
     @Column({
@@ -34,9 +33,6 @@ export class Project extends BaseModel {
         type: DataType.DATE,
     })
     deadline!: Date;
-
-    @BelongsTo(() => User)
-    client: User;
 
     @BelongsTo(() => Status)
     status: Status;

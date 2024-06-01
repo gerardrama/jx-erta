@@ -3,7 +3,7 @@ import { createDepartment, deleteDepartment, findDepartment, updateDepartment } 
 
 export const departmentRoutes = express.Router();
 
-departmentRoutes.route('/deaprtments')
+departmentRoutes.route('/departments')
     .get(findDepartment);
 
 departmentRoutes.route('/departments/:id')
@@ -12,5 +12,5 @@ departmentRoutes.route('/departments/:id')
 departmentRoutes.route('/departments/:id')
     .delete(deleteDepartment);
 
-departmentRoutes.route('departments')
+departmentRoutes.route('/departments')
     .post(createDepartment);

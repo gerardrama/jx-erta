@@ -5,7 +5,10 @@ import { User } from "../models/User";
 export const getAllProjects = async (req, res) => {
     try {
         const projects = await Project.findAll({
-            
+            include: [Status, {
+                model: User,
+                through: { attributes: []}
+            }]
         });
         console.log(projects);
         if (!projects || projects.length === 0) {
@@ -42,12 +45,12 @@ export const createProject = async (req, res) => {
         }
 
         const newProject = await Project.create({
-            project
+            ...project
         });
 
         return res.status(201).json(newProject);
     } catch (error) {
-        return res.status(500).json({ error: 'An error occurred while creating the project' });
+        return res.status(500).json({ error: 'An error occurred while creating the project' + error });
     }
 }
 
