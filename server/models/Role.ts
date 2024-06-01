@@ -1,7 +1,8 @@
-import { AutoIncrement, Column, DataType, Model, NotNull, PrimaryKey, Table } from "sequelize-typescript";
+import {BaseModel} from "./BaseModel";
+import {AutoIncrement, Column, DataType, Model, PrimaryKey, Table} from "sequelize-typescript";
 
 @Table
-export class Priority extends Model {
+export class Role extends Model {
     @PrimaryKey
     @AutoIncrement
     @Column({

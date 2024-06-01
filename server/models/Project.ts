@@ -4,7 +4,7 @@ import { User } from "./User";
 import { Status } from "./Status";
 
 @Table
-export class Project extends BaseModel<Project> {
+export class Project extends BaseModel {
     
     @Column({
         type: DataType.STRING,

@@ -1,7 +1,7 @@
 import { AutoIncrement, Column, DataType, Model, NotNull, PrimaryKey, Table } from "sequelize-typescript";
 
 @Table
-export class Status extends Model<Status>{
+export class Status extends Model {
     @PrimaryKey
     @AutoIncrement
     @Column({

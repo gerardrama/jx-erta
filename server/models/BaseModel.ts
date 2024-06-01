@@ -1,6 +1,6 @@
 import { Model, Column, DataType, CreatedAt, UpdatedAt, PrimaryKey, AutoIncrement } from "sequelize-typescript";
 
-export class BaseModel<T extends {}> extends Model<T> {
+export class BaseModel extends Model {
     @PrimaryKey
     @AutoIncrement
     @Column({

@@ -1,12 +1,14 @@
-import { Column, DataType, ForeignKey, Table } from "sequelize-typescript";
+import {BelongsTo, BelongsToMany, Column, DataType, ForeignKey, HasOne, Table} from "sequelize-typescript";
 import { BaseModel } from "./BaseModel";
 import { Status } from "./Status";
 import { Project } from "./Project";
 import { Priority } from "./Priority";
 import { Department } from "./Department";
+import {User} from "./User";
+import {UserTasks} from "./UserTasks";
 
 @Table
-export class Task extends BaseModel<Task> {
+export class Task extends BaseModel {
 
     @ForeignKey(() => Project)
     @Column({
@@ -58,4 +60,25 @@ export class Task extends BaseModel<Task> {
         type: DataType.DATE,
     })
     deadline!: Date;
+
+    @BelongsTo(() => Department)
+    department: Department;
+
+    @BelongsTo(() => Task)
+    parent: Task;
+
+    @BelongsTo(() => Status)
+    status: Status;
+
+    @BelongsTo(() => Project)
+    project: Project;
+
+    @BelongsTo(() => Priority)
+    priority: Priority;
+
+    @BelongsToMany(() => User, {
+        through: {model: () => UserTasks},
+        foreignKey: 'taskId'
+    })
+    users: User[]
 }

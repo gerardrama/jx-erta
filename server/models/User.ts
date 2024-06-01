@@ -1,9 +1,12 @@
-import { Table, Column, DataType, ForeignKey } from 'sequelize-typescript';
-import { Department } from './Department'; // Ensure you have a Department model defined
+import {Table, Column, DataType, ForeignKey, BelongsToMany, BelongsTo} from 'sequelize-typescript';
+import { Department } from './Department';
 import { BaseModel } from './BaseModel';
+import {Task} from "./Task";
+import {UserTasks} from "./UserTasks";
+import {Role} from "./Role";
 
 @Table
-export class User extends BaseModel<User> {
+export class User extends BaseModel {
 
   @Column({
     type: DataType.STRING,
@@ -24,11 +27,12 @@ export class User extends BaseModel<User> {
   })
   fullName!: string;
 
+  @ForeignKey(() => Role)
   @Column({
-    type: DataType.STRING,
+    type: DataType.INTEGER,
     allowNull: false,
   })
-  role!: string;
+  roleId!: number;
 
   @Column({
     type: DataType.DATE,
@@ -55,4 +59,22 @@ export class User extends BaseModel<User> {
     allowNull: false,
   })
   departmentId!: number;
+
+  @Column({
+    type: DataType. STRING,
+    allowNull: true
+  })
+  refreshToken!: string | null;
+
+  @BelongsTo(() => Role)
+  role!: Role;
+
+  @BelongsTo(() => Department)
+  department!: Department;
+
+  @BelongsToMany(() => Task, {
+    through: {model: () => UserTasks},
+    foreignKey: 'userId'
+  })
+  tasks: Task[]
 }

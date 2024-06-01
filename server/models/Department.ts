@@ -1,8 +1,8 @@
-import { Column, DataType, NotNull, Table } from "sequelize-typescript";
+import { Column, DataType, Table } from "sequelize-typescript";
 import { BaseModel } from "./BaseModel";
 
 @Table
-export class Department extends BaseModel<Department> {
+export class Department extends BaseModel {
 
     @Column({
         type: DataType.STRING,
