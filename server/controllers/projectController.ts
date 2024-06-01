@@ -5,7 +5,10 @@ import { User } from "../models/User";
 export const getAllProjects = async (req, res) => {
     try {
         const projects = await Project.findAll({
-            
+            include: [Status, {
+                model: User,
+                through: { attributes: []}
+            }]
         });
         console.log(projects);
         if (!projects || projects.length === 0) {
