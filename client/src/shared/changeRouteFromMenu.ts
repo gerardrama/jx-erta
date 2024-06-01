@@ -3,15 +3,15 @@ export const changeRouteFromMenu = (menuKey: string) => {
         case '1':
             return "";
         case '2':
-            return "store-info";
+            return "projects";
         case '3':
-            return "products";
-        case '4':
-            return "news";
-        case '5':
-            return "testimonials";
-        case '6':
-            return "faq";
+            return "departments";
+        // case '4':
+        //     return "news";
+        // case '5':
+        //     return "testimonials";
+        // case '6':
+        //     return "faq";
         default:
             return "";
     }
