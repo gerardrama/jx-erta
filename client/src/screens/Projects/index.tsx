@@ -11,11 +11,11 @@ const Projects = () => {
     const [updateRecord, setUpdateRecord] = React.useState<ProjectType | null>(null);
 
   return (
-    <div>
+    <div style={{paddingTop: '80px',}}>
         <ProjectModal open={openProjectModal} setOpen={setOpenProjectModal} updateRecord={updateRecord} 
             // tableRefetch={faq.refetch}
         />
-        <h1>Projects</h1>
+        {/* <h1>Projects</h1> */}
 
         <div className={styles.cardsContainer}>
             {projectCards.map((card, index) => (

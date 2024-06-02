@@ -13,7 +13,7 @@ const Employees: React.FC = () => {
   const [openEmployeeModal, setOpenEmployeeModal] = React.useState(false);
   const [updateRecord, setUpdateRecord] = React.useState<EmployeeType | null>(null);
 
-  const {data: employees, isLoading: isEmployeesLoading} = useGetEmployeesQuery();
+  const {data: employees, isLoading: isEmployeesLoading, refetch: employeesRefetch} = useGetEmployeesQuery();
   const {data: roles, isLoading: isRolesLoading} = useGetRolesQuery();
   const {data: departments, isLoading: isDepartmentsLoading} = useGetDepartmentsQuery();
 
@@ -22,7 +22,7 @@ const Employees: React.FC = () => {
   const columns = [
     {
       title: 'Name',
-      dataIndex: 'name',
+      dataIndex: 'fullName',
       key: 'name',
     },
     {
@@ -43,13 +43,15 @@ const Employees: React.FC = () => {
     },
     {
       title: 'Role',
-      dataIndex: 'role',
+      dataIndex: 'roleId',
       key: 'role',
+      render: (roleId) => <p>{roles?.find((role) => role.id === roleId)?.name || 'N/A'}</p>,
     },
     {
       title: 'Department',
-      dataIndex: 'department',
+      dataIndex: 'departmentId',
       key: 'department',
+      render: (departmentId) => <p>{departments?.find((department) => department.id === departmentId)?.title || 'N/A'}</p>,
     },
     {
       title: 'Actions',
@@ -57,7 +59,7 @@ const Employees: React.FC = () => {
       render: (_, record) => (
         <Space size="middle">
           <Button type='primary' ghost size='small' onClick={() => {
-            setUpdateRecord(employees?.find((employee) => employee.fullName === record.name) || null);
+            setUpdateRecord(record);
             setOpenEmployeeModal(true);
           }}>Update</Button>
             <Popconfirm
@@ -79,20 +81,8 @@ const Employees: React.FC = () => {
     message.success('Employee deleted successfully!');
   };
   
-  const getDataToDisplay = () => employees.map((item) => {
-    return {
-      name: item.fullName,
-      dateOfBirth: item.dateOfBirth,
-      personalId: item.personalId,
-      address: item.address,
-      role: roles?.find((role) => role.id === item.roleId)?.name || 'N/A',
-      department: departments?.find((department) => department.id === item.departmentId)?.title || 'N/A',
-    }
-  });
-
-
   return (
-    <div>
+    <div style={{paddingTop: '80px',}}>
       {isLoading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} /> : <div className={styles.tableWrapper}>
           <EmployeeModal 
             open={openEmployeeModal} 
@@ -100,9 +90,13 @@ const Employees: React.FC = () => {
             updateRecord={updateRecord}
             roles={roles || []}
             departments={departments || []}
-            />
-          <Table columns={columns} dataSource={getDataToDisplay()} />;
-          <FloatButton icon={<PlusOutlined />} onClick={() => setOpenEmployeeModal(true)} />
+            tableRefetch={employeesRefetch}
+          />
+          <Table columns={columns} dataSource={employees} />;
+          <FloatButton icon={<PlusOutlined />} onClick={() => {
+            setUpdateRecord(null);
+            setOpenEmployeeModal(true);
+          }} />
         </div>
       }
     </div>

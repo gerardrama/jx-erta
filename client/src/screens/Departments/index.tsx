@@ -14,7 +14,6 @@ const Departments = () => {
   return (
     <div style={{paddingTop: '80px',}}>
         <DepartmentModal open={openDepartmentModal} setOpen={setOpenDepartmentModal} updateRecord={updateRecord} tableRefetch={departments.refetch} />
-        <h1>Departments</h1>
 
         <div className={styles.cardsContainer}>
             {departments.data?.map((card:any, index: number) => (

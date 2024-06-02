@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   InboxOutlined,
   TeamOutlined,
-  ProjectOutlined,
+  // ProjectOutlined,
   LogoutOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';

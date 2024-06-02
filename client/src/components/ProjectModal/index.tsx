@@ -2,13 +2,12 @@ import { Button, DatePicker, Form, Input, Modal, Select } from 'antd';
 import React, { useEffect } from 'react'
 import TextArea from 'antd/es/input/TextArea';
 import { clients, statuses } from '../../shared/data';
-import { ProjectType } from '../../shared/models';
 import dayjs from 'dayjs';
 
 interface ProjectModalPropTypes {
     open: boolean,
     setOpen: React.Dispatch<React.SetStateAction<boolean>>,
-    updateRecord: ProjectType | null
+    updateRecord: any | null
     // tableRefetch: any
 }
 
@@ -74,7 +73,7 @@ const ProjectModal = ({open, setOpen, updateRecord,
 
     return (
         <Modal
-            title={!!serveUpdateRecord() ?  `Update` : 'Create a new project'}
+            title={!!serveUpdateRecord() ?  `Update ${serveUpdateRecord().title}` : 'Create a new project'}
             centered
             open={open}
             width={600}

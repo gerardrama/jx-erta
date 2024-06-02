@@ -1,8 +1,7 @@
-import { Button, DatePicker, Form, Input, Modal, Select, Spin } from 'antd';
+import { Button, DatePicker, Form, Input, Modal, Select } from 'antd';
 import React, { useEffect } from 'react'
 import TextArea from 'antd/es/input/TextArea';
-import { clients, statuses } from '../../shared/data';
-import { DepartmentType, EmployeeType } from '../../shared/models';
+import {  EmployeeType } from '../../shared/models';
 import dayjs from 'dayjs';
 import { useCreateEmployeeMutation } from '../../redux/services/endpoints';
 
@@ -12,45 +11,29 @@ interface EmployeeModalPropTypes {
     updateRecord: EmployeeType | null,
     roles: any[],
     departments: any[],
-    // tableRefetch: any
+    tableRefetch: any
 }
 
-const EmployeeModal = ({open, setOpen, updateRecord, roles, departments
-    // tableRefetch
-}: EmployeeModalPropTypes) => {
+const EmployeeModal = ({open, setOpen, updateRecord, roles, departments, tableRefetch}: EmployeeModalPropTypes) => {
+    const [formRef] = Form.useForm();
 
     const [createEmployee] = useCreateEmployeeMutation();
-
-    const employees = [{
-        id: 1,
-        name: 'John Doe',
-    },
-    {   id: 2,
-        name: 'John Toe',
-    },
-    ]
-    const [formRef] = Form.useForm();
 
     const serveUpdateRecord = () => {
         return updateRecord ? {
             ...updateRecord,
             dateOfBirth: dayjs(updateRecord.dateOfBirth),
-            name: updateRecord.fullName,
-            role: roles.find((role) => role.id === updateRecord.roleId)?.name,
-            department: departments.find((department) => department.id === updateRecord.departmentId)?.name,
-            // deadline: dayjs(updateRecord.deadline)
+            roleId: roles.find((role) => role.id === updateRecord.roleId)?.name,
+            departmentId: departments.find((department) => department.id === updateRecord.departmentId)?.name,
         } : false;
     }
 
     useEffect(() => {
         if(open){
-            if(updateRecord){
+            if(!!serveUpdateRecord()){
                 formRef?.setFieldsValue(serveUpdateRecord());
             }else{
                 formRef?.resetFields();
-                formRef?.setFieldsValue({
-                    status: statuses[0].name
-                })
             }
         }
     }, [open, updateRecord])
@@ -63,12 +46,14 @@ const EmployeeModal = ({open, setOpen, updateRecord, roles, departments
     }
     
     const handleOnFinish = (values: any) =>{
-        let submitValues = {...values};
+        let submitValues = {
+            ...values,
+            dateOfBirth: values.dateOfBirth.format('YYYY-MM-DD'),
+        };
         
-        submitValues.dateOfBirth = submitValues.dateOfBirth.format('YYYY-MM-DD');
         console.log(submitValues)
 
-        // if(!!serveUpdateRecord()){
+        if(!!serveUpdateRecord()){
         //     submitValues = {...submitValues, id: updateRecord?.key}
         //     console.log(updateRecord)
         //     updateFaq(submitValues).unwrap()
@@ -78,21 +63,21 @@ const EmployeeModal = ({open, setOpen, updateRecord, roles, departments
         //         // tableRefetch();
         //         setOpen(false);
         //     })
-        // }else{
-        //     createFaq(submitValues).unwrap().catch((err) => {
-        //         console.log(err);
-        //     }).finally(() => {
-        //         // tableRefetch();
-        //         setOpen(false);
-        //     })
-        // }
 
-        setOpen(false);
+            setOpen(false);
+        }else{
+            createEmployee(submitValues).unwrap().catch((err) => {
+                console.log(err);
+            }).finally(() => {
+                tableRefetch();
+                setOpen(false);
+            })
+        }
     }
 
     return (
         <Modal
-            title={!!serveUpdateRecord() ?  `Update` : 'Add a new employee'}
+            title={!!serveUpdateRecord() ?  `Update employee` : 'Add a new employee'}
             centered
             open={open}
             width={600}
@@ -108,8 +93,8 @@ const EmployeeModal = ({open, setOpen, updateRecord, roles, departments
                 form={formRef}
             >
                 <Form.Item
-                    label="Name"
-                    name="name"
+                    label="Full Name"
+                    name="fullName"
                     rules={[{ required: true, message: 'Please input the employee name!' }]}
                 >
                     <Input placeholder="Employee name" />
@@ -144,7 +129,7 @@ const EmployeeModal = ({open, setOpen, updateRecord, roles, departments
                 </Form.Item>
                 <Form.Item
                     label="Role"
-                    name="role"
+                    name="roleId"
                     rules={[{ required: true, message: 'Please input the employee role!' }]}
                 >
                     <Select
@@ -161,7 +146,7 @@ const EmployeeModal = ({open, setOpen, updateRecord, roles, departments
                 </Form.Item>
                 <Form.Item
                     label="Department"
-                    name="department"
+                    name="departmentId"
                     rules={[{ required: true, message: 'Please input the employee department!' }]}
                 >
                     <Select
