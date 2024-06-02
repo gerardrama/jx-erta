@@ -3,6 +3,8 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import TaskCard from "../TaskCard";
 import styles from "./TaskBoard.module.css"
 import {emitTaskDrag} from "../../socketConnection.ts";
+import { Button } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 
 // fake data generator
 const getItems = (count, offset = 0) =>
@@ -88,8 +90,12 @@ function TaskBoard() {
     }
 
     return (
-        <div style={{width:'100%'}}>
-            <button
+        <div style={{
+            width: '100%',
+            height: '100%',
+            paddingTop: '80px',
+        }}>
+            {/* <button
                 type="button"
                 onClick={() => {
                     setState([...state, []]);
@@ -104,8 +110,8 @@ function TaskBoard() {
                 }}
             >
                 Add new item
-            </button>
-            <div style={{ display: "flex" }}>
+            </button> */}
+            <div style={{ display: "flex", height: "100%" }}>
                 <DragDropContext onDragEnd={onDragEnd}>
                     {state.map((el, ind) => (
                         <Droppable key={ind} droppableId={`${ind}`}>
@@ -116,8 +122,13 @@ function TaskBoard() {
                                     {...provided.droppableProps}
                                     className={styles.column}
                                 >
-                                    <div>
-                                        <h3 style={{marginTop: 0, marginLeft: '15px'}}>Group {ind}</h3>
+                                    <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: "15px"}}>
+                                        <h3 style={{marginTop: 0, marginBottom: 0, marginLeft: '15px'}}>Group {ind}</h3>
+                                        <Button 
+                                            type="dashed" 
+                                            onClick={() => console.log("aaa")} 
+                                            icon={<PlusOutlined style={{opacity: '0.75'}}/>}
+                                        ></Button>
                                     </div>
                                     <div className={styles.cardContainer}>
                                         {el.map((item, index) => (
