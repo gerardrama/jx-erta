@@ -5,12 +5,21 @@ const ADMIN_URL = 'admin'
 
 const endpoints = api.injectEndpoints({
     endpoints: (builder) => ({
+        getEmployees: builder.query<any, void>({
+            query: () => `users`,
+        }),
         createEmployee: builder.mutation({
             query: (body) => ({
                 url: `auth/register`,
                 method: 'POST',
                 body,
             }),
+        }),
+        getRoles: builder.query<any, void>({
+            query: () => `roles`,
+        }),
+        getDepartments: builder.query<any, void>({
+            query: () => `departments`,
         }),
         loginAdmin: builder.mutation({
             query: (body) => ({
@@ -148,7 +157,10 @@ const endpoints = api.injectEndpoints({
 })
 
 export const {
+    useGetEmployeesQuery,
     useCreateEmployeeMutation,
+    useGetRolesQuery,
+    useGetDepartmentsQuery,
     useGetAllUsersQuery,
     useGetAllStoreInfoQuery,
     useCreateStoreInfoMutation,

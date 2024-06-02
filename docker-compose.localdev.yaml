@@ -2,22 +2,22 @@ version: '3'
 name: jx-erta-localdev
 
 services:
-  client:
-    build:
-      context: ./client
-      dockerfile: ./dev.Dockerfile
-    ports:
-      - "3000:3000"
-    volumes:
-    - "./client/:/app"
-    env_file:
-      - "client/.env"
-    entrypoint: 
-    - "/bin/sh"
-    - "-c"
-    - "npm install && npm run dev"
-    network_mode: bridge
-    restart: always
+  # client:
+  #   build:
+  #     context: ./client
+  #     dockerfile: ./dev.Dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #   - "./client/:/app"
+  #   env_file:
+  #     - "client/.env"
+  #   entrypoint: 
+  #   - "/bin/sh"
+  #   - "-c"
+  #   - "npm install && npm run dev"
+  #   network_mode: bridge
+  #   restart: always
 
   server:
     build:

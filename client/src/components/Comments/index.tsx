@@ -7,7 +7,7 @@ const { TextArea } = Input;
 
 interface CommentItem {
   author: string;
-  avatar: string;
+  avatar: React.ReactNode;
   content: React.ReactNode;
   datetime: string;
 }
@@ -58,7 +58,7 @@ const Comments: React.FC = () => {
         ...comments,
         {
           author: 'Han Solo',
-          avatar: 'https://joeschmoe.io/api/v1/random',
+          avatar: <Avatar style={{ backgroundColor: '#f56a00' }}>H</Avatar>,
           content: <p>{value}</p>,
           datetime: moment('2016-11-22').fromNow(),
         },
@@ -73,7 +73,7 @@ const Comments: React.FC = () => {
   return (
     <>
       <Comment
-        avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
+        avatar={<Avatar style={{ backgroundColor: '#f56a00' }}>H</Avatar>}
         content={
           <Editor
           onChange={handleChange}

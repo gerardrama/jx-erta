@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   InboxOutlined,
   TeamOutlined,
-  UserOutlined,
+  ProjectOutlined,
   LogoutOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
@@ -33,10 +33,10 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem('Task Board', '1', <TeamOutlined />),
+  getItem('Task Board', '1', <ProjectOutlined />),
   getItem('Projects', '2', <InboxOutlined />),
   getItem('Departments', '3', <InboxOutlined />),
-  getItem('Employees', '4', <UserOutlined />),
+  getItem('Employees', '4', <TeamOutlined />),
   // getItem('News Table', '4', <FileTextOutlined />),
   // getItem('Testimonials Table', '5', <CommentOutlined />),
   // getItem('FAQ Table', '6', <CommentOutlined />)
@@ -71,7 +71,7 @@ const Dashboard: React.FC = () => {
       <Layout className={styles.innerLayout}>
         <Header className={styles.header} style={{ background: colorBgContainer }}>
           <h1 className={styles.title}>Admin Dashboard</h1>
-          <div>
+          <div style={{marginRight: '20px'}}>
             <Notifications />
           </div>
         </Header>
