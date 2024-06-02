@@ -19,5 +19,10 @@ export const socketServer = (server) => {
         socket.on('TASK_DRAG', (data) => {
             console.log(data);
         })
+
+        socket.on('SEND_COMMENT', (newComment) => {
+            // console.log(newComment);
+            socket.emit('UPDATE_COMMENT', newComment);
+        })
     });
 };

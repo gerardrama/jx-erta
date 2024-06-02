@@ -1,13 +1,14 @@
 import { Avatar, Button , Form, Input, List } from 'antd';
 import { Comment } from '@ant-design/compatible';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import {socket, updateComments} from "../../socketConnection.ts";
 
 const { TextArea } = Input;
 
 interface CommentItem {
   author: string;
-  avatar: string;
+  avatar: React.ReactNode;
   content: React.ReactNode;
   datetime: string;
 }
@@ -46,6 +47,25 @@ const Comments: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [value, setValue] = useState('');
 
+  useEffect(() => {
+    console.log(comments)
+  });
+
+  useEffect(() => {
+    socket.on('UPDATE_COMMENT', (data) => {
+      setComments([{
+        author: data.author,
+        avatar: <Avatar style={{ backgroundColor: '#f56a00' }}>{data.author[0]}</Avatar>,
+        content: <p>{data.content}</p>,
+        datetime: moment().fromNow(),
+      }, ...comments]);
+    });
+
+    // return () => {
+    //   socket.off('UPDATE_COMMENT');
+    // };
+  }, []);
+
   const handleSubmit = () => {
     if (!value) return;
 
@@ -54,15 +74,21 @@ const Comments: React.FC = () => {
     setTimeout(() => {
       setSubmitting(false);
       setValue('');
-      setComments([
-        ...comments,
-        {
+      // setComments([
+      //   ...comments,
+      //   {
+      //     author: 'Han Solo',
+      //     avatar: <Avatar style={{ backgroundColor: '#f56a00' }}>H</Avatar>,
+      //     content: <p>{value}</p>,
+      //     datetime: moment('2016-11-22').fromNow(),
+      //   },
+      // ]);
+      updateComments({
           author: 'Han Solo',
-          avatar: 'https://joeschmoe.io/api/v1/random',
-          content: <p>{value}</p>,
+          content: value,
           datetime: moment('2016-11-22').fromNow(),
-        },
-      ]);
+        }
+      )
     }, 1000);
   };
 
@@ -73,7 +99,7 @@ const Comments: React.FC = () => {
   return (
     <>
       <Comment
-        avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
+        avatar={<Avatar style={{ backgroundColor: '#f56a00' }}>H</Avatar>}
         content={
           <Editor
           onChange={handleChange}

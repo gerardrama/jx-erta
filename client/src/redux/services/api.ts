@@ -16,10 +16,10 @@ const baseQuery = fetchBaseQuery({
 
         headers.set("Accept", "application/json");
 
-        const token = (getState() as RootState).auth.token;
-        if (token) {
-            headers.set('authorization', token);
-        }
+        // const token = (getState() as RootState).auth.token;
+        // if (token) {
+        //     headers.set('authorization', token);
+        // }
         return headers
     }
 });

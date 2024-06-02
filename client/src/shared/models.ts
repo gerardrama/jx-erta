@@ -7,8 +7,8 @@ export interface DepartmentType{
 export interface EmployeeType{
     id: number;
     email: string;
-    name: string;
-    role: string;
+    fullName: string;
+    roleId: string;
     dateOfBirth: string;
     personalId: string;
     address: string;

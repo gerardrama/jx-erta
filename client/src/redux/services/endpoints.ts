@@ -4,6 +4,9 @@ import {api} from './api'
 
 const endpoints = api.injectEndpoints({
     endpoints: (builder) => ({
+        getEmployees: builder.query<any, void>({
+            query: () => `users`,
+        }),
         // ================= AUTH =================
         login: builder.mutation({
             query: (body) => ({
@@ -12,6 +15,24 @@ const endpoints = api.injectEndpoints({
                 body,
             }),
         }),
+        getRoles: builder.query<any, void>({
+            query: () => `roles`,
+        }),
+        getDepartments: builder.query<any, void>({
+            query: () => `departments`,
+        }),
+        // loginAdmin: builder.mutation({
+        //     query: (body) => ({
+        //         url: `${ADMIN_URL}/login`,
+        //         method: 'POST',
+        //         body,
+        //     }),
+        // }),
+        // getAllUsers: builder.query<User[], void>({
+        //     query: () => `${ADMIN_URL}/users`,
+        // }),
+        // getAllStoreInfo: builder.query<StoreInfo[], void>({
+        //     query: () => `${ADMIN_URL}/products-info`,
         logout: builder.query<any, void>({
             query: () => `auth/logout`,
         }),
@@ -24,9 +45,6 @@ const endpoints = api.injectEndpoints({
         }),
 
         // ================= DEPARTMENT =================
-        getDepartments: builder.query<any, void>({
-            query: () => `departments`,
-        }),
         createDepartment: builder.mutation({
             query: (body) => ({
                 url: `departments`,
@@ -46,10 +64,12 @@ const endpoints = api.injectEndpoints({
 })
 
 export const {
+    useGetDepartmentsQuery,
+    useGetEmployeesQuery,
     useLoginMutation,
     useLazyLogoutQuery,
     useCreateEmployeeMutation,
-    useGetDepartmentsQuery,
+    useGetRolesQuery,
     useCreateDepartmentMutation,
     useUpdateDepartmentMutation
 } = endpoints

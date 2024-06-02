@@ -4,7 +4,7 @@ import { Avatar, Badge, Button, Card, Divider, Input, Modal, Tooltip } from 'ant
 import {UserOutlined, AntDesignOutlined, EditOutlined, SaveOutlined} from '@ant-design/icons';
 import Comments from '../Comments';
 
-const TaskDetails = () => {
+const TaskDetails = ({isSubTask}) => {
 
     const [isSubTaskOpen, setIsSubTaskOpen] = React.useState(false);
     const [isEditingTitle, setIsEditingTitle] = React.useState(false);
@@ -37,7 +37,7 @@ const TaskDetails = () => {
     return (
         <div className={styles.bodyWrapper}>
             <Modal open={isSubTaskOpen} onCancel={handleSubTaskClose} footer='' width='50%'>
-                <TaskDetails/>
+                <TaskDetails isSubTask={true}/>
             </Modal>
             <div className={styles.header}>
                 {isEditingTitle ? <div>
@@ -94,7 +94,7 @@ const TaskDetails = () => {
                         </div>
                         {isEditingDescription ? <Input.TextArea style={{marginTop: '10px'}}></Input.TextArea> : <p style={{fontSize: '14px'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. In saepe numquam error fugiat earum blanditiis recusandae ea eius minima. Ad perspiciatis neque dignissimos labore explicabo molestias excepturi, repellendus assumenda tenetur.</p>}
                     </div>
-                    <div>
+                    {!isSubTask && <div>
                         <p>Sub-Tasks</p>
                         <Card size="small" title="Subtask 1" extra={<Button size='small' onClick={showSubTask}>More</Button>}>
                             <div className={styles.subtaskBody}>
@@ -121,12 +121,15 @@ const TaskDetails = () => {
                                 </div>
                             </div>
                         </Card>
-                    </div>
+                    </div>}
                 </div>
                 <div className={styles.actions}>
                     <p style={{fontSize: 'small'}}>Actions</p>
                     <div>
-                        <Button>Default Button</Button>
+                        <Button size='small'>Edit Asignees</Button>
+                        <Button size='small'>Edit Status</Button>
+                        <Button size='small'>Edit Priority</Button>
+                        <Button size='small'>Edit Department</Button>
                     </div>
                 </div>
             </div>
@@ -152,7 +155,7 @@ const TaskCard = ({provided, snapshot, getItemStyle}) => {
     return (
         <>
             <Modal open={isModalOpen} onCancel={handleCancel} footer='' width='50%'>
-                <TaskDetails/>
+                <TaskDetails isSubTask={false}/>
             </Modal>
                 <Card 
                     ref={provided.innerRef}

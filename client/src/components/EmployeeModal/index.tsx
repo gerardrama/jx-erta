@@ -1,4 +1,4 @@
-import { Button, DatePicker, Form, Input, Modal, Select } from 'antd';
+import { Button, DatePicker, Form, Input, Modal, Select, Spin } from 'antd';
 import React, { useEffect } from 'react'
 import TextArea from 'antd/es/input/TextArea';
 import { clients, statuses } from '../../shared/data';
@@ -9,11 +9,13 @@ import { useCreateEmployeeMutation } from '../../redux/services/endpoints';
 interface EmployeeModalPropTypes {
     open: boolean,
     setOpen: React.Dispatch<React.SetStateAction<boolean>>,
-    updateRecord: EmployeeType | null
+    updateRecord: EmployeeType | null,
+    roles: any[],
+    departments: any[],
     // tableRefetch: any
 }
 
-const EmployeeModal = ({open, setOpen, updateRecord, 
+const EmployeeModal = ({open, setOpen, updateRecord, roles, departments
     // tableRefetch
 }: EmployeeModalPropTypes) => {
 
@@ -32,7 +34,10 @@ const EmployeeModal = ({open, setOpen, updateRecord,
     const serveUpdateRecord = () => {
         return updateRecord ? {
             ...updateRecord,
-            // status: updateRecord.status.name,
+            dateOfBirth: dayjs(updateRecord.dateOfBirth),
+            name: updateRecord.fullName,
+            role: roles.find((role) => role.id === updateRecord.roleId)?.name,
+            department: departments.find((department) => department.id === updateRecord.departmentId)?.name,
             // deadline: dayjs(updateRecord.deadline)
         } : false;
     }
@@ -60,6 +65,7 @@ const EmployeeModal = ({open, setOpen, updateRecord,
     const handleOnFinish = (values: any) =>{
         let submitValues = {...values};
         
+        submitValues.dateOfBirth = submitValues.dateOfBirth.format('YYYY-MM-DD');
         console.log(submitValues)
 
         // if(!!serveUpdateRecord()){
@@ -132,12 +138,14 @@ const EmployeeModal = ({open, setOpen, updateRecord,
                 <Form.Item
                     label="Address"
                     name="address"
+                    rules={[{ required: true, message: 'Please input the employee address!' }]}
                 >
                     <TextArea rows={2} placeholder="Address address" />
                 </Form.Item>
                 <Form.Item
                     label="Role"
                     name="role"
+                    rules={[{ required: true, message: 'Please input the employee role!' }]}
                 >
                     <Select
                         placeholder='Select role'
@@ -145,15 +153,16 @@ const EmployeeModal = ({open, setOpen, updateRecord,
                         showSearch
                         optionFilterProp="children"
                         filterOption={filterClientOption}
-                        options={employees.map((employee) => ({
-                            label: employee.name,
-                            value: employee.id.toString()
+                        options={roles.map((role) => ({
+                            label: role.name,
+                            value: role.id.toString()
                         }))}
                     />
                 </Form.Item>
                 <Form.Item
                     label="Department"
                     name="department"
+                    rules={[{ required: true, message: 'Please input the employee department!' }]}
                 >
                     <Select
                         placeholder='Select department'
@@ -161,9 +170,9 @@ const EmployeeModal = ({open, setOpen, updateRecord,
                         showSearch
                         optionFilterProp="children"
                         filterOption={filterClientOption}
-                        options={employees.map((employee) => ({
-                            label: employee.name,
-                            value: employee.id.toString()
+                        options={departments.map((department) => ({
+                            label: department.name,
+                            value: department.id.toString()
                         }))}
                     />
                 </Form.Item>

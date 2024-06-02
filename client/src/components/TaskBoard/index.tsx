@@ -89,6 +89,19 @@ function TaskBoard() {
         }
     }
 
+    const getGroupName = (index: number) => {
+        switch(index) {
+            case 0:
+                return "To Do";
+            case 1:
+                return "In Progress";
+            case 2:
+                return "Done";
+            default:
+                return "Group";
+        }
+    }
+
     return (
         <div style={{
             width: '100%',
@@ -123,7 +136,7 @@ function TaskBoard() {
                                     className={styles.column}
                                 >
                                     <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: "15px"}}>
-                                        <h3 style={{marginTop: 0, marginBottom: 0, marginLeft: '15px'}}>Group {ind}</h3>
+                                        <h3 style={{marginTop: 0, marginBottom: 0, marginLeft: '15px'}}>{getGroupName(ind)}</h3>
                                         <Button 
                                             type="dashed" 
                                             onClick={() => console.log("aaa")} 

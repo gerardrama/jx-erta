@@ -5,3 +5,7 @@ export const emitTaskDrag = (task) => {
     // TODO: BASIC WEB SOCKET IMPLEMENTATION, CHANGE/REMOVE LATER
     socket.emit('TASK_DRAG', task);
 }
+
+export const updateComments = (newComment) => {
+    socket.emit('SEND_COMMENT', newComment);
+};
