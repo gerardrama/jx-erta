@@ -33,7 +33,7 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem('Task Board', '1', <TeamOutlined />),
+  getItem('Dashboard', '1', <TeamOutlined />),
   getItem('Projects', '2', <InboxOutlined />),
   getItem('Departments', '3', <InboxOutlined />),
   getItem('Employees', '4', <UserOutlined />),

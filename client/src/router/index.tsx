@@ -1,11 +1,12 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Dashboard from "../screens/Dashboard";
-import TaskBoard from "../components/TaskBoard";
+// import TaskBoard from "../components/TaskBoard";
 import Projects from "../screens/Projects";
 import Login from "../screens/Login";
 import ProtectedRoute from "./ProtectedRoute";
 import Departments from "../screens/Departments";
 import Employees from "../screens/Employees";
+import Statistics from "../components/Statistics";
 
 const MainRouter = ({token}: {token: any}) => {
   return <Routes>
@@ -21,7 +22,10 @@ const MainRouter = ({token}: {token: any}) => {
     >
         <Route 
         path="" 
-        element={<TaskBoard/>} />
+        element={
+        // <TaskBoard/>
+        <Statistics />
+        } />
         <Route 
         path="projects" 
         element={<Projects />} />
