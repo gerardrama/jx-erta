@@ -2,6 +2,8 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Dashboard from "../screens/Dashboard";
 import TaskBoard from "../components/TaskBoard";
 import Projects from "../screens/Projects";
+import Departments from "../screens/Departments";
+import Employees from "../screens/Employees";
 // import Login from "../screens/Login";
 // import Dashboard from "../screens/Dashboard";
 // import ProtectedRoute from "./ProtectedRoute";
@@ -33,7 +35,10 @@ const MainRouter = () => {
         element={<Projects />} />
         <Route 
         path="departments" 
-        element={<h1>Departments</h1>} />
+        element={<Departments/>} />
+        <Route 
+        path="employees" 
+        element={<Employees/>} />
         {/* <Route 
         path="news" 
         element={<NewsTable/>} />

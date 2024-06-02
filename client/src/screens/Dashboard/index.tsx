@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import {
   InboxOutlined,
   TeamOutlined,
-  FileTextOutlined,
-  CommentOutlined,
+  UserOutlined,
   LogoutOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
@@ -15,7 +14,7 @@ import useLogout from '../../shared/useLogout';
 import { Header } from 'antd/es/layout/layout';
 import Notifications from '../../components/Notifications';
 
-const { Content, Footer, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -37,6 +36,7 @@ const items: MenuItem[] = [
   getItem('Task Board', '1', <TeamOutlined />),
   getItem('Projects', '2', <InboxOutlined />),
   getItem('Departments', '3', <InboxOutlined />),
+  getItem('Employees', '4', <UserOutlined />),
   // getItem('News Table', '4', <FileTextOutlined />),
   // getItem('Testimonials Table', '5', <CommentOutlined />),
   // getItem('FAQ Table', '6', <CommentOutlined />)

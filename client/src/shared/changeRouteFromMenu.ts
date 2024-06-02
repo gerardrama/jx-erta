@@ -6,6 +6,8 @@ export const changeRouteFromMenu = (menuKey: string) => {
             return "projects";
         case '3':
             return "departments";
+        case '4':
+            return "employees";
         // case '4':
         //     return "news";
         // case '5':

@@ -5,6 +5,13 @@ const ADMIN_URL = 'admin'
 
 const endpoints = api.injectEndpoints({
     endpoints: (builder) => ({
+        createEmployee: builder.mutation({
+            query: (body) => ({
+                url: `auth/register`,
+                method: 'POST',
+                body,
+            }),
+        }),
         loginAdmin: builder.mutation({
             query: (body) => ({
                 url: `${ADMIN_URL}/login`,
@@ -141,7 +148,7 @@ const endpoints = api.injectEndpoints({
 })
 
 export const {
-    useLoginAdminMutation,
+    useCreateEmployeeMutation,
     useGetAllUsersQuery,
     useGetAllStoreInfoQuery,
     useCreateStoreInfoMutation,

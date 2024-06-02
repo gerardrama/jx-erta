@@ -1,3 +1,99 @@
+export const departmentCards = [
+    {
+        title: 'Card title 1',
+        description: 'Card description 1',
+        employees: [{
+                id: 1,
+                name: 'John Doe',
+            },
+            {
+                id: 2,
+                name: 'John Doe',
+            },
+            {
+                id: 2,
+                name: 'John Doe',
+            },
+            {
+                id: 2,
+                name: 'John Doe',
+            },
+            {
+                id: 2,
+                name: 'John Doe',
+            },
+            {
+                id: 2,
+                name: 'John Doe',
+            },
+            {
+                id: 2,
+                name: 'John Doe',
+            },
+            {
+                id: 2,
+                name: 'John Doe',
+            },
+            {
+                id: 2,
+                name: 'John Doe',
+            },
+            {
+                id: 2,
+                name: 'John Doe',
+            },
+            {
+                id: 2,
+                name: 'John Doe',
+            },
+            {
+                id: 2,
+                name: 'John Doe',
+            },
+            {
+                id: 2,
+                name: 'John Doe',
+            },
+            {
+                id: 2,
+                name: 'John Doe',
+            },
+            {
+                id: 2,
+                name: 'John Doe',
+            },
+            {
+                id: 2,
+                name: 'John Doe',
+            },
+            {
+                id: 2,
+                name: 'John Doe',
+            },
+            {
+                id: 2,
+                name: 'John Doe',
+            },
+            {
+                id: 2,
+                name: 'John Doe',
+            },
+        ],
+    },
+    {
+        title: 'Card title 2',
+        description: 'Card description 2',
+        employees: [{
+                id: 1,
+                name: 'John Doe',
+            },
+            {
+                id: 2,
+                name: 'John Doe',
+            }
+        ],
+    }
+]
 export const projectCards = [
     {
         title: 'Card title 1',
