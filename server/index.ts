@@ -13,6 +13,7 @@ import { priorityRoute } from "./routes/priorityRoutes";
 import {commentRoutes} from "./routes/commentRoutes";
 import http from 'http';
 import {socketServer} from './configs/socketServer';
+import {roleRoutes} from "./routes/roleRoutes";
 
 const app: Express = express();
 const port = process.env.PORT;
@@ -34,7 +35,7 @@ app.use(departmentRoutes);
 app.use(priorityRoute);
 app.use(userRoutes);
 app.use(commentRoutes);
-
+app.use(roleRoutes);
 app.get('/', function(req, res){
     res.send("We are online!");
 })

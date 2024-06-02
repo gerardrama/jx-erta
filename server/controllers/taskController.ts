@@ -71,13 +71,13 @@ export const createTask = async (req, res) => {
            ...task
         });
 
-        if (task.userIds.length !== 0) {
-            task.userIds.forEach(async userId => {
+        if (task.userIds?.length !== 0 && Array.isArray(task.userIds)) {
+            for (const userId of task.userIds) {
                 await UserTasks.create({
                     userId: userId,
                     taskId: newTask.id
                 });
-            });
+            }
         }
 
         return res.status(201).json(newTask);
@@ -86,21 +86,23 @@ export const createTask = async (req, res) => {
     }
 };
 
-export const updateTask = async (req, res) => {
+export const updateTask = async (req, res, next) => {
     const id = req.params.id;
     const updatedTask: { projectId, title, description, statusId, priorityId, departmentId, parentId, deadline, userIds: number[] } = req.body;
-    
+    req.body['activity'] = 'update';
     try {
         const task = await Task.findByPk(id);
         if (!task) {
             return res.status(204).json({ message: 'Task not found' });
         }
 
+        req.body['oldTask'] = JSON.parse(JSON.stringify(task.dataValues));
+
         await task.update({
             ...updatedTask
         });
 
-        if (updatedTask.userIds.length !== 0) {
+        if (updatedTask.userIds?.length !== 0) {
             const currentUserIds = (await UserTasks.findAll({ where: { taskId: id } })).map(userTask => userTask.id);
 
             const usersToAdd = currentUserIds.filter(userId => !currentUserIds.includes(userId));
@@ -118,8 +120,7 @@ export const updateTask = async (req, res) => {
                 include: [User]
             });
         }
-        
-        return res.status(200).json(updatedTask);
+        next();
     } catch (error) {
         return res.status(500).json({ error: 'An error occurred while updating the task' });
     }

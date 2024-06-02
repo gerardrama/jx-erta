@@ -1,5 +1,6 @@
 import express from "express";
 import { createTask, deleteTask, getAllTasks, getTask, getUserTasks, updateTask } from "../controllers/taskController";
+import {taskActivityAudit} from "../middleware/taskActivityAudit";
 
 export const taskRoute = express.Router();
 
@@ -13,10 +14,10 @@ taskRoute.route('/tasks')
     .post(createTask);
 
 taskRoute.route('/tasks/:id')
-    .put(updateTask);
+    .put(updateTask, taskActivityAudit);
 
 taskRoute.route('/tasks/:id')
-    .delete(deleteTask);
+    .delete(deleteTask, taskActivityAudit);
 
 taskRoute.route('/task/:userId')
     .get(getUserTasks);

@@ -13,7 +13,8 @@ export class Task extends BaseModel {
     @ForeignKey(() => Project)
     @Column({
         type: DataType.INTEGER,
-        allowNull: false
+        allowNull: false,
+        onDelete: 'CASCADE'
     })
     projectId!: number;
 
@@ -31,8 +32,9 @@ export class Task extends BaseModel {
 
     @ForeignKey(() => Status)
     @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
+        type: DataType.INTEGER,
+        allowNull: false,
+        onDelete: 'CASCADE'
     })
     statusId!: number;
 
@@ -40,19 +42,22 @@ export class Task extends BaseModel {
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
+        onDelete: 'CASCADE'
     })
     priorityId!: number;
 
     @ForeignKey(() => Department)
     @Column({
         type: DataType.INTEGER,
-        allowNull: false
+        allowNull: false,
+        onDelete: 'CASCADE'
     })
     departmentId!: number;
 
     @ForeignKey(() => Task)
     @Column({
-        type: DataType.INTEGER
+        type: DataType.INTEGER,
+        onDelete: 'CASCADE'
     })
     parentId!: number | null;
 
@@ -78,7 +83,8 @@ export class Task extends BaseModel {
 
     @BelongsToMany(() => User, {
         through: {model: () => UserTasks},
-        foreignKey: 'taskId'
+        foreignKey: 'taskId',
+        onDelete: 'cascade'
     })
     users: User[]
 }
