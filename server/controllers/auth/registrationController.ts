@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt';
 import {User} from "../../models/User";
+import nodemailer from 'nodemailer';
 
 interface RegistrationRequest {
     email,
-    password,
     fullName,
     roleId,
     dateOfBirth,
@@ -12,12 +12,29 @@ interface RegistrationRequest {
     departmentId
 }
 
+const transporter = nodemailer.createTransport({
+    host: process.env.SMPT_HOST,
+    port: process.env.SMPT_PORT,
+    auth: {
+        user: process.env.SMTP_USERNAME,
+        pass: process.env.SMTP_PASSWORD
+    }
+});
+async function sendEmail(password: string) {
+    const info = await transporter.sendMail({
+        from: 'garrett.wilderman@ethereal.email',
+        to: "gerardrama10@gmail.com",
+        subject: "New password",
+        text: `Your newly created password is: ${password}`
+    });
+}
+
 export const handleRegistration = async (req, res) => {
     const registrationRequest: RegistrationRequest = req.body;
-    if (!registrationRequest.email || !registrationRequest.password)
+    if (!registrationRequest.email)
         return res
             .status(400)
-            .json({ 'message': 'Email and password are required.' });
+            .json({ 'message': 'Email is required.' });
 
     const duplicate = await User.findOne(
         ({
@@ -34,7 +51,8 @@ export const handleRegistration = async (req, res) => {
                 message: 'User already exists'
             });
     try {
-        const hashedPwd = await bcrypt.hash(registrationRequest.password, 10);
+        const password = Math.random().toString(36).toUpperCase().slice(-10);
+        const hashedPwd = await bcrypt.hash(password, 10);
 
         const newUser = {
             email: registrationRequest.email,
@@ -47,6 +65,7 @@ export const handleRegistration = async (req, res) => {
             dateOfBirth: registrationRequest.dateOfBirth
         };
         const user = await User.create(newUser);
+        await sendEmail(password);
         res.status(201).json({ 'success': `New user ${user} created!` });
     } catch (err) {
         res.status(500).json({ 'message': err });

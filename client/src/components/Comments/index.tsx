@@ -1,7 +1,8 @@
 import { Avatar, Button , Form, Input, List } from 'antd';
 import { Comment } from '@ant-design/compatible';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import {socket, updateComments} from "../../socketConnection.ts";
 
 const { TextArea } = Input;
 
@@ -46,6 +47,14 @@ const Comments: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [value, setValue] = useState('');
 
+
+  useEffect(() => {
+    socket.on('UPDATE_COMMENT', (data) => {
+      console.log(data);
+      setComments([...comments, data])
+    });
+  }, [socket, comments]);
+
   const handleSubmit = () => {
     if (!value) return;
 
@@ -63,6 +72,13 @@ const Comments: React.FC = () => {
           datetime: moment('2016-11-22').fromNow(),
         },
       ]);
+      updateComments({
+          author: 'Han Solo',
+          avatar: 'https://joeschmoe.io/api/v1/random',
+          content: <p>{value}</p>,
+          datetime: moment('2016-11-22').fromNow(),
+        }
+      )
     }, 1000);
   };
 
