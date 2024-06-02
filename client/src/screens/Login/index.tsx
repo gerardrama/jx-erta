@@ -5,6 +5,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../redux/reducers/auth';
 import { useLoginMutation } from '../../redux/services/endpoints';
+import logo from '../../img/logo.png';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,8 @@ const Login = () => {
 
   return (
     <div className={styles.body}>
-      <Card title="Login" className={styles.card}>
+      <Card className={styles.card}>
+        <img src={logo} style={{marginBottom: "25px"}} />
         <Form
           name="normal_login"
           className="login-form"
