@@ -14,6 +14,13 @@ const endpoints = api.injectEndpoints({
         logout: builder.query<any, void>({
             query: () => `auth/logout`,
         }),
+        createEmployee: builder.mutation({
+            query: (body) => ({
+                url: `auth/register`,
+                method: 'POST',
+                body,
+            }),
+        }),
     }),
     overrideExisting: false,
 })
@@ -21,4 +28,5 @@ const endpoints = api.injectEndpoints({
 export const {
     useLoginMutation,
     useLazyLogoutQuery,
+    useCreateEmployeeMutation,
 } = endpoints

@@ -4,6 +4,8 @@ import TaskBoard from "../components/TaskBoard";
 import Projects from "../screens/Projects";
 import Login from "../screens/Login";
 import ProtectedRoute from "./ProtectedRoute";
+import Departments from "../screens/Departments";
+import Employees from "../screens/Employees";
 
 const MainRouter = ({token}: {token: any}) => {
   return <Routes>
@@ -17,7 +19,6 @@ const MainRouter = ({token}: {token: any}) => {
         </ProtectedRoute>
         } 
     >
-        
         <Route 
         path="" 
         element={<TaskBoard/>} />
@@ -26,7 +27,10 @@ const MainRouter = ({token}: {token: any}) => {
         element={<Projects />} />
         <Route 
         path="departments" 
-        element={<h1>Departments</h1>} />
+        element={<Departments/>} />
+        <Route 
+        path="employees" 
+        element={<Employees/>} />
     </Route>
     
     {/* if no route  */}

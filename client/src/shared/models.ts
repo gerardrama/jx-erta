@@ -1,3 +1,20 @@
+export interface DepartmentType{
+    title: string;
+    description: string;
+    employees: EmployeeType[];
+}
+
+export interface EmployeeType{
+    id: number;
+    email: string;
+    name: string;
+    role: string;
+    dateOfBirth: string;
+    personalId: string;
+    address: string;
+    departmentId: number;
+}
+
 export interface ProjectType{
     title: string;
     description: string;
