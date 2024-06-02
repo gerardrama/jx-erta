@@ -23,7 +23,7 @@ interface EditorProps {
 const CommentList = ({ comments }: { comments: CommentItem[] }) => (
   <List
     dataSource={comments}
-    header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
+    header={`${comments.length} ${comments.length > 1 ? 'comments' : 'comment'}`}
     itemLayout="horizontal"
     renderItem={props => <Comment {...props} />}
   />
@@ -48,22 +48,14 @@ const Comments: React.FC = () => {
   const [value, setValue] = useState('');
 
   useEffect(() => {
-    console.log(comments)
-  });
-
-  useEffect(() => {
     socket.on('UPDATE_COMMENT', (data) => {
-      setComments([{
+      setComments((comments) => [{
         author: data.author,
         avatar: <Avatar style={{ backgroundColor: '#f56a00' }}>{data.author[0]}</Avatar>,
         content: <p>{data.content}</p>,
         datetime: moment().fromNow(),
       }, ...comments]);
     });
-
-    // return () => {
-    //   socket.off('UPDATE_COMMENT');
-    // };
   }, []);
 
   const handleSubmit = () => {
@@ -74,15 +66,6 @@ const Comments: React.FC = () => {
     setTimeout(() => {
       setSubmitting(false);
       setValue('');
-      // setComments([
-      //   ...comments,
-      //   {
-      //     author: 'Han Solo',
-      //     avatar: <Avatar style={{ backgroundColor: '#f56a00' }}>H</Avatar>,
-      //     content: <p>{value}</p>,
-      //     datetime: moment('2016-11-22').fromNow(),
-      //   },
-      // ]);
       updateComments({
           author: 'Han Solo',
           content: value,
