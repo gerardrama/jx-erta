@@ -8,7 +8,6 @@ export const socketServer = (server) => {
         },
     });
 
-    // your io connection logic
     io.on("connection", async (socket) => {
         console.log('CONNECTED TO SOCKET', socket.id);
         // TODO: BASIC WEB SOCKET IMPLEMENTATION, CHANGE/REMOVE LATER
@@ -21,8 +20,7 @@ export const socketServer = (server) => {
         })
 
         socket.on('SEND_COMMENT', (newComment) => {
-            // console.log(newComment);
-            socket.emit('UPDATE_COMMENT', newComment);
+            io.emit('UPDATE_COMMENT', newComment);
         })
     });
 };

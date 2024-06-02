@@ -5,10 +5,17 @@ import { EditOutlined, ProjectOutlined, PlusOutlined, UserOutlined, CalendarOutl
 import ProjectModal from '../../components/ProjectModal';
 import { projectCards } from '../../shared/data';
 import { ProjectType } from '../../shared/models';
+import { useNavigate } from 'react-router-dom';
 
 const Projects = () => {
+    const navigate = useNavigate();
+
     const [openProjectModal, setOpenProjectModal] = React.useState(false);
     const [updateRecord, setUpdateRecord] = React.useState<ProjectType | null>(null);
+
+    const handleBoardNavigation = (index: number) => {
+        navigate(`/dashboard/boards/${index}`);
+    }
 
   return (
     <div style={{paddingTop: '80px',}}>
@@ -37,7 +44,7 @@ const Projects = () => {
                                 setUpdateRecord(projectCards[index]);
                                 setOpenProjectModal(true);
                             }} />,
-                            <ProjectOutlined key="board" />,
+                            <ProjectOutlined onClick={() => handleBoardNavigation(index)} key="board" />,
                         ]}
                     >   
                         <div className={styles.cardDescription}>

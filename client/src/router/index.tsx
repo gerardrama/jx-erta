@@ -1,12 +1,12 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Dashboard from "../screens/Dashboard";
-// import TaskBoard from "../components/TaskBoard";
 import Projects from "../screens/Projects";
 import Login from "../screens/Login";
 import ProtectedRoute from "./ProtectedRoute";
 import Departments from "../screens/Departments";
 import Employees from "../screens/Employees";
 import Statistics from "../components/Statistics";
+import TaskBoard from "../components/TaskBoard";
 
 const MainRouter = ({token}: {token: any}) => {
   return <Routes>
@@ -22,10 +22,7 @@ const MainRouter = ({token}: {token: any}) => {
     >
         <Route 
         path="" 
-        element={
-        // <TaskBoard/>
-        <Statistics />
-        } />
+        element={<Statistics />} />
         <Route 
         path="projects" 
         element={<Projects />} />
@@ -35,6 +32,9 @@ const MainRouter = ({token}: {token: any}) => {
         <Route 
         path="employees" 
         element={<Employees/>} />
+        <Route 
+        path="boards/:id"
+        element={<TaskBoard/>} />
     </Route>
     
     {/* if no route  */}
