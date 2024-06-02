@@ -161,6 +161,7 @@ function TaskBoard() {
                                                         provided={provided}
                                                         snapshot={snapshot}
                                                         getItemStyle={getItemStyle}
+                                                        index={index}
                                                     />
                                                 )}
                                             </Draggable>
