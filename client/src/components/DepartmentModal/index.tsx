@@ -1,42 +1,26 @@
-import { Button, DatePicker, Form, Input, Modal, Select } from 'antd';
+import { Button, Form, Input, Modal, Select } from 'antd';
 import React, { useEffect } from 'react'
 import TextArea from 'antd/es/input/TextArea';
-import { clients, statuses } from '../../shared/data';
-import { DepartmentType } from '../../shared/models';
-import dayjs from 'dayjs';
+import { employees, statuses } from '../../shared/data';
+import { useCreateDepartmentMutation, useUpdateDepartmentMutation } from '../../redux/services/endpoints';
 
 interface DepartmentModalPropTypes {
     open: boolean,
     setOpen: React.Dispatch<React.SetStateAction<boolean>>,
-    updateRecord: DepartmentType | null
-    // tableRefetch: any
+    updateRecord: any | null
+    tableRefetch: any
 }
 
-const DepartmentModal = ({open, setOpen, updateRecord, 
-    // tableRefetch
-}: DepartmentModalPropTypes) => {
-    const employees = [{
-        id: 1,
-        name: 'John Doe',
-    },
-    {   id: 2,
-        name: 'John Toe',
-    },
-    ]
+const DepartmentModal = ({open, setOpen, updateRecord, tableRefetch}: DepartmentModalPropTypes) => {
     const [formRef] = Form.useForm();
 
-    const serveUpdateRecord = () => {
-        return updateRecord ? {
-            ...updateRecord,
-            // status: updateRecord.status.name,
-            // deadline: dayjs(updateRecord.deadline)
-        } : false;
-    }
+    const [createDepartment] = useCreateDepartmentMutation();
+    const [updateDepartment] = useUpdateDepartmentMutation();
 
     useEffect(() => {
         if(open){
-            if(updateRecord){
-                formRef?.setFieldsValue(serveUpdateRecord());
+            if(!!updateRecord){
+                formRef?.setFieldsValue(updateRecord);
             }else{
                 formRef?.resetFields();
                 formRef?.setFieldsValue({
@@ -54,35 +38,28 @@ const DepartmentModal = ({open, setOpen, updateRecord,
     }
     
     const handleOnFinish = (values: any) =>{
-        let submitValues = {...values, deadline: values.deadline.$d};
-        
-        console.log(submitValues)
-
-        // if(!!serveUpdateRecord()){
-        //     submitValues = {...submitValues, id: updateRecord?.key}
-        //     console.log(updateRecord)
-        //     updateFaq(submitValues).unwrap()
-        //     .catch((err) => {
-        //         console.log(err);
-        //     }).finally(() => {
-        //         // tableRefetch();
-        //         setOpen(false);
-        //     })
-        // }else{
-        //     createFaq(submitValues).unwrap().catch((err) => {
-        //         console.log(err);
-        //     }).finally(() => {
-        //         // tableRefetch();
-        //         setOpen(false);
-        //     })
-        // }
-
-        setOpen(false);
+        if(!!updateRecord){
+            const submitValues = {...values, id: updateRecord?.id}
+            updateDepartment(submitValues).unwrap()
+            .catch((err) => {
+                console.log(err);
+            }).finally(() => {
+                tableRefetch();
+                setOpen(false);
+            })
+        }else{
+            createDepartment(values).unwrap().catch((err) => {
+                console.log(err);
+            }).finally(() => {
+                tableRefetch();
+                setOpen(false);
+            })
+        }
     }
 
     return (
         <Modal
-            title={!!serveUpdateRecord() ?  `Update` : 'Create a new department'}
+            title={!!updateRecord ?  `Update ${updateRecord.name}` : 'Create a new department'}
             centered
             open={open}
             width={600}

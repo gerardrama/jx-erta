@@ -69,7 +69,7 @@ const Dashboard: React.FC = () => {
         </div>
       </Sider>
       <Layout className={styles.innerLayout}>
-        <Header className={styles.header} style={{ background: colorBgContainer }}>
+        <Header className={styles.header} style={{ background: colorBgContainer, zIndex: 99 }}>
           <h1 className={styles.title}>Admin Dashboard</h1>
           <div>
             <Notifications />

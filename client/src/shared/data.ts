@@ -142,3 +142,13 @@ export const statuses = [
     { id: 5, name: 'Scheduled', color: "#666" },
     { id: 6, name: 'Done', color: "green" },
 ]
+
+export const employees = [
+    {
+        id: 1,
+        name: 'John Doe',
+    },
+    {   id: 2,
+        name: 'John Toe',
+    },
+]
