@@ -7,7 +7,7 @@ import {handleLogout} from "../controllers/auth/logoutController";
 export const authRoute = express.Router();
 
 authRoute.route('/login')
-    .get(handleLogin);
+    .post(handleLogin);
 
 authRoute.route('/register')
     .post(handleRegistration);
