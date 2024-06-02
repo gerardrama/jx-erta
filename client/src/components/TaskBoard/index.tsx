@@ -62,7 +62,7 @@ const getListStyle = isDraggingOver => ({
 });
 
 function TaskBoard() {
-    const [state, setState] = useState([getItems(10), getItems(5, 10)]);
+    const [state, setState] = useState([getItems(10), getItems(5, 10), getItems(2, 15), getItems(0, 17), getItems(2, 17)]);
 
     function onDragEnd(result) {
         const { source, destination } = result;
@@ -92,10 +92,16 @@ function TaskBoard() {
     const getGroupName = (index: number) => {
         switch(index) {
             case 0:
-                return "To Do";
+                return "Backlog";
             case 1:
                 return "In Progress";
             case 2:
+                return "In Review";
+            case 3:
+                return "Ready forSchedule";
+            case 4:
+                return "Scheduled";
+            case 5:
                 return "Done";
             default:
                 return "Group";
