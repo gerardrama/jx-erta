@@ -40,9 +40,9 @@ const Notifications = () => {
 
     const [open, setOpen] = React.useState(false);
 
-    const hide = () => {
-        setOpen(false);
-    };
+    // const hide = () => {
+    //     setOpen(false);
+    // };
 
     const handleOpenChange = (newOpen: boolean) => {
         setOpen(newOpen);
