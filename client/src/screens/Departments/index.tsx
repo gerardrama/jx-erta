@@ -1,48 +1,48 @@
 import React from 'react'
 import styles from './Departments.module.css'
-import { Avatar, Badge, Button, Card, Tooltip } from 'antd'
-import { EditOutlined, PlusOutlined, UserOutlined, CalendarOutlined } from '@ant-design/icons';
+import { Avatar, Button, Card, Tooltip } from 'antd'
+import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import DepartmentModal from '../../components/DepartmentModal';
-import { departmentCards } from '../../shared/data';
-import { DepartmentType } from '../../shared/models';
+import { useGetDepartmentsQuery } from '../../redux/services/endpoints';
 
 const Departments = () => {
     const [openDepartmentModal, setOpenDepartmentModal] = React.useState(false);
-    const [updateRecord, setUpdateRecord] = React.useState<DepartmentType | null>(null);
+    const [updateRecord, setUpdateRecord] = React.useState<any | null>(null);
+
+    const departments = useGetDepartmentsQuery();
 
   return (
-    <div>
-        <DepartmentModal open={openDepartmentModal} setOpen={setOpenDepartmentModal} updateRecord={updateRecord} 
-            // tableRefetch={faq.refetch}
-        />
+    <div style={{paddingTop: '80px',}}>
+        <DepartmentModal open={openDepartmentModal} setOpen={setOpenDepartmentModal} updateRecord={updateRecord} tableRefetch={departments.refetch} />
         <h1>Departments</h1>
 
         <div className={styles.cardsContainer}>
-            {departmentCards.map((card, index) => (
+            {departments.data?.map((card:any, index: number) => (
                 <Card 
+                    key={index}
                     className={styles.card}
                     classNames={{
                         body: styles.cardBody,
                         title: styles.cardTitle
                     }}
-                    title={card.title} 
+                    title={card.name} 
                     bordered={false}
                     actions={[
                         <EditOutlined key="edit" onClick={() => {
-                            setUpdateRecord(departmentCards[index]);
+                            setUpdateRecord(card);
                             setOpenDepartmentModal(true);
                         }} />,
                     ]}
                 >   
                     <div className={styles.cardDescription}>
-                        {card.description}
+                        {card.description ?? 'No description'}
                     </div>
 
                     <div className={styles.cardFooter}>
                         <div>
                             <Avatar.Group maxCount={9} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
-                                {card.employees.map((employee, index) => (
-                                    <Tooltip title={employee.name} placement="top">
+                                {card.employees?.map((employee: any, index: number) => (
+                                    <Tooltip title={employee.name} placement="top" key={index}>
                                         <Avatar style={{ backgroundColor: '#f56a00' }}>{employee.name[0]}</Avatar>
                                     </Tooltip>
                                 ))}

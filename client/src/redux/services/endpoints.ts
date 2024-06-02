@@ -4,6 +4,7 @@ import {api} from './api'
 
 const endpoints = api.injectEndpoints({
     endpoints: (builder) => ({
+        // ================= AUTH =================
         login: builder.mutation({
             query: (body) => ({
                 url: `auth/login`,
@@ -21,6 +22,25 @@ const endpoints = api.injectEndpoints({
                 body,
             }),
         }),
+
+        // ================= DEPARTMENT =================
+        getDepartments: builder.query<any, void>({
+            query: () => `departments`,
+        }),
+        createDepartment: builder.mutation({
+            query: (body) => ({
+                url: `departments`,
+                method: 'POST',
+                body,
+            }),
+        }),
+        updateDepartment: builder.mutation({
+            query: (body) => ({
+                url: `departments/${body.id}`,
+                method: 'PUT',
+                body,
+            }),
+        }),
     }),
     overrideExisting: false,
 })
@@ -29,4 +49,7 @@ export const {
     useLoginMutation,
     useLazyLogoutQuery,
     useCreateEmployeeMutation,
+    useGetDepartmentsQuery,
+    useCreateDepartmentMutation,
+    useUpdateDepartmentMutation
 } = endpoints
