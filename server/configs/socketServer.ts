@@ -21,7 +21,7 @@ export const socketServer = (server) => {
         })
 
         socket.on('SEND_COMMENT', (newComment) => {
-            console.log(newComment);
+            // console.log(newComment);
             socket.emit('UPDATE_COMMENT', newComment);
         })
     });

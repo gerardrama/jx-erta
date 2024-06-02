@@ -47,13 +47,24 @@ const Comments: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [value, setValue] = useState('');
 
+  useEffect(() => {
+    console.log(comments)
+  });
 
   useEffect(() => {
     socket.on('UPDATE_COMMENT', (data) => {
-      console.log(data);
-      setComments([...comments, data])
+      setComments([{
+        author: data.author,
+        avatar: <Avatar style={{ backgroundColor: '#f56a00' }}>{data.author[0]}</Avatar>,
+        content: <p>{data.content}</p>,
+        datetime: moment().fromNow(),
+      }, ...comments]);
     });
-  }, [socket, comments]);
+
+    // return () => {
+    //   socket.off('UPDATE_COMMENT');
+    // };
+  }, []);
 
   const handleSubmit = () => {
     if (!value) return;
@@ -63,19 +74,18 @@ const Comments: React.FC = () => {
     setTimeout(() => {
       setSubmitting(false);
       setValue('');
-      setComments([
-        ...comments,
-        {
-          author: 'Han Solo',
-          avatar: <Avatar style={{ backgroundColor: '#f56a00' }}>H</Avatar>,
-          content: <p>{value}</p>,
-          datetime: moment('2016-11-22').fromNow(),
-        },
-      ]);
+      // setComments([
+      //   ...comments,
+      //   {
+      //     author: 'Han Solo',
+      //     avatar: <Avatar style={{ backgroundColor: '#f56a00' }}>H</Avatar>,
+      //     content: <p>{value}</p>,
+      //     datetime: moment('2016-11-22').fromNow(),
+      //   },
+      // ]);
       updateComments({
           author: 'Han Solo',
-          avatar: 'https://joeschmoe.io/api/v1/random',
-          content: <p>{value}</p>,
+          content: value,
           datetime: moment('2016-11-22').fromNow(),
         }
       )
