@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import {
-  InboxOutlined,
   TeamOutlined,
-  // ProjectOutlined,
-  LogoutOutlined
+  LogoutOutlined,
+  BarChartOutlined,
+  FundProjectionScreenOutlined,
+  UserOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Button, Layout, Menu, theme } from 'antd';
@@ -13,6 +14,7 @@ import styles from './Dashboard.module.css'
 import useLogout from '../../shared/useLogout';
 import { Header } from 'antd/es/layout/layout';
 import Notifications from '../../components/Notifications';
+import logo from '../../img/logo.png'
 
 const { Content, Sider } = Layout;
 
@@ -33,10 +35,10 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem('Dashboard', '1', <TeamOutlined />),
-  getItem('Projects', '2', <InboxOutlined />),
-  getItem('Departments', '3', <InboxOutlined />),
-  getItem('Employees', '4', <TeamOutlined />),
+  getItem('Dashboard', '1', <BarChartOutlined />),
+  getItem('Projects', '2', <FundProjectionScreenOutlined />),
+  getItem('Departments', '3', <TeamOutlined /> ),
+  getItem('Employees', '4', <UserOutlined />),
   // getItem('News Table', '4', <FileTextOutlined />),
   // getItem('Testimonials Table', '5', <CommentOutlined />),
   // getItem('FAQ Table', '6', <CommentOutlined />)
@@ -62,7 +64,15 @@ const Dashboard: React.FC = () => {
         collapsed={collapsed} 
         onCollapse={(value) => setCollapsed(value)}
       >
-        {/* <div className="demo-logo-vertical" /> */}
+        <img src={logo} alt="" style={{
+              width: "150px",
+              borderRadius: "20px",
+              overflow: "hidden",
+              position: "relative",
+              left: "50%",
+              transform: "translateX(-50%)",
+              margin: "20px 0",
+        }}/>
         <div className={styles.siderMenu}>
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} onClick={changeMenu} />
           <Button ghost type="primary" icon={<LogoutOutlined rotate={180}/>} size={'large'} onClick={logout} style={{margin: '4px', width: 'auto'}}></Button>
@@ -70,7 +80,9 @@ const Dashboard: React.FC = () => {
       </Sider>
       <Layout className={styles.innerLayout}>
         <Header className={styles.header} style={{ background: colorBgContainer, zIndex: 99 }}>
-          <h1 className={styles.title}>Admin Dashboard</h1>
+          <h1 className={styles.title}>
+            {/* Admin Dashboard */}
+          </h1>
           <div style={{marginRight: '20px'}}>
             <Notifications />
           </div>
