@@ -1,7 +1,7 @@
 import {User} from "../models/User";
 import {Role} from "../models/Role";
 
-export const getAllRoles = async(req, res) {
+export const getAllRoles = async(req, res) => {
     try {
         const roles = await Role.findAll();
 
