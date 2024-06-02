@@ -1,5 +1,6 @@
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { RootState } from '../store';
+import { clearToken } from '../reducers/auth';
 // import { clearToken } from '../reducers/auth';
 
 const baseQuery = fetchBaseQuery({
@@ -32,7 +33,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 
     if (result.error?.status === 400 || result.error?.status === 401 || result.error?.status === 402 || result.error?.status === 403) {
         localStorage.removeItem('token');
-        // api.dispatch(clearToken());
+        api.dispatch(clearToken());
     }
     return result;
 };
